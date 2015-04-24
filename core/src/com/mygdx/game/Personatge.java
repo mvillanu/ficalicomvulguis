@@ -188,8 +188,8 @@ public class Personatge {
          * Definir les vores de l'sprite
          */
         PolygonShape requadre = new PolygonShape();
-        requadre.setAsBox((getSpritePersonatge().getWidth() /* frame_cols*/) / (2 * JocDeTrons.PIXELS_PER_METRE),
-                (getSpritePersonatge().getHeight() /* frame_rows)*/ / (2 * JocDeTrons.PIXELS_PER_METRE)));
+        requadre.setAsBox((getSpritePersonatge().getWidth() / frame_cols) / (2 * JocDeTrons.PIXELS_PER_METRE),
+                (getSpritePersonatge().getHeight() / frame_rows) / (2 * JocDeTrons.PIXELS_PER_METRE));
 
         /**
          * La densitat i fricció del protagonista. Si es modifiquen aquests

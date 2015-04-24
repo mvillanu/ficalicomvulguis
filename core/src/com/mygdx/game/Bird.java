@@ -61,14 +61,18 @@ public class Bird extends Personatge {
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
 
+        if (getCos().getPosition().y < 5.0f) {
+            getCos().applyLinearImpulse(new Vector2(0.4f, 1.0f),
+                    getCos().getWorldCenter(), true);
+        }
+
+
         if (isMoureDreta() && xVelocity<2.2f) {
             getCos().applyLinearImpulse(new Vector2(0.4f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
 
-            if (!isPersonatgeCaraDreta()) {
-                getSpritePersonatge().flip(true, false);
-            }
+
             setPersonatgeCaraDreta(true);
         } else if (isMoureEsquerra() && xVelocity<2.2f) {
             getCos().applyLinearImpulse(new Vector2(-0.4f, 0.0f),

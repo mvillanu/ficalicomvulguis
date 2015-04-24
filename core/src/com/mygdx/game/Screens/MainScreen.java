@@ -112,7 +112,7 @@ public class MainScreen extends AbstractScreen {
 		// crear el personatge
         personatge = new Personatge(world);
         enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma.png",1.0f, 3.0f, Enemy.ENEMIC1);
-        bird = new Bird(world,"imatges/angrybirdSprite.png",null,1.0f, 3.0f,5, 3, "Bird");
+        bird = new Bird(world,"imatges/angrybirdSprite.png",null,1.0f, 8.0f,5, 3, "Bird");
         // objecte que permet debugar les col·lisions
 		//debugRenderer = new Box2DDebugRenderer();
 	}
