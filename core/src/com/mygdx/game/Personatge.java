@@ -83,11 +83,14 @@ public class Personatge {
     }
 
     private void carregarTextures(String animatedImage, String stoppedImage) {
-        setAnimatedTexture(new Texture(Gdx.files.internal(animatedImage)));
-        getAnimatedTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-
-        setStoppedTexture(new Texture(Gdx.files.internal(stoppedImage)));
-        getStoppedTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        if(animatedImage != null){
+            setAnimatedTexture(new Texture(Gdx.files.internal(animatedImage)));
+            getAnimatedTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
+        if(stoppedImage != null) {
+            setStoppedTexture(new Texture(Gdx.files.internal(stoppedImage)));
+            getStoppedTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        }
     }
 
     /**
