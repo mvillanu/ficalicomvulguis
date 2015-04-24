@@ -6,19 +6,22 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.mygdx.game.Crap;
 import com.mygdx.game.Enemy;
 import com.mygdx.game.GestorContactes;
 import com.mygdx.game.JocDeTrons;
 import com.mygdx.game.MapBodyManager;
 import com.mygdx.game.Personatge;
 import com.mygdx.game.TiledMapHelper;
-import com.badlogic.gdx.physics.box2d.Body;
+
+import java.util.ArrayList;
 
 /**
  * Una pantalla del joc
@@ -40,9 +43,9 @@ public class MainScreen extends AbstractScreen {
 
 	// objecte que gestiona el protagonista del joc
 	// ---->private PersonatgeBackup personatge;
-    Personatge personatge;
-    Enemy enemic;
-
+    private Personatge personatge;
+    private Enemy enemic;
+    private ArrayList<Crap> crapList;
 
 
 
@@ -285,6 +288,7 @@ public class MainScreen extends AbstractScreen {
 
 	     personatge.moure();
          personatge.updatePosition();
+
         String enemyJump=null;
         if ((enemyJump=gestorContactes.enemyMustJump())!=null){
             gestorContactes.resetEnemyName();
@@ -294,7 +298,7 @@ public class MainScreen extends AbstractScreen {
         enemic.moure();
         enemic.updatePosition();
 
-
+        eliminarCossos();
         /**
          * Cal actualitzar les posicions i velocitats de tots els objectes. El
          * primer paràmetre és la quanitat de frames/segon que dibuixaré
@@ -324,6 +328,9 @@ public class MainScreen extends AbstractScreen {
 		batch.begin();
     		personatge.dibuixar(batch);
             enemic.dibuixar(batch);
+            checkCrapList();
+
+
 	    	// finalitzar el lot: a partir d'aquest moment es dibuixa tot el que
 		    // s'ha indicat entre begin i end
 		batch.end();
@@ -336,6 +343,15 @@ public class MainScreen extends AbstractScreen {
 		//		JocDeTrons.PIXELS_PER_METRE, JocDeTrons.PIXELS_PER_METRE,
 		//		JocDeTrons.PIXELS_PER_METRE));
 	}
+
+    private void checkCrapList() {
+        if(crapList.size()>0){
+            for(int i=0;i<crapList.size();i++){
+                crapList.get(i).dibuixar(batch);
+            }
+        }
+    }
+
 
     private void eliminarCossos(){
         /*

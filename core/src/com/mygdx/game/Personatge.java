@@ -204,6 +204,7 @@ public class Personatge {
      */
     public void moure() {
 
+
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
         if (moureDreta) {

@@ -51,33 +51,10 @@ public class GestorContactes implements ContactListener {
 		}
 
 
-        /*
-        if((fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)||fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1))&&
-                (fixtureA.getBody().getUserData().equals("Personatge")||fixtureB.getBody().getUserData().equals("Personatge"))){
 
-                if(fixtureA.getBody().getUserData().equals("Personatge")){
-                    bodyDestroyList.add(fixtureA.getBody());
-                }else{
-                    bodyDestroyList.add(fixtureB.getBody());
-                }
+        //checkEsborrar(fixtureA, fixtureB);
 
-        }
-        */
-
-    /*
-        if(fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)||fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1)){
-            if((!fixtureA.getBody().getUserData().equals("stark"))&&(!fixtureB.getBody().getUserData().equals("stark"))){
-                enemyName=Enemy.ENEMIC1;
-            }
-        }
-    */
-
-        if ((fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)
-                && fixtureB.getBody().getUserData().toString().startsWith("enemy"))
-                || fixtureA.getBody().getUserData().toString().startsWith("enemy")){
-            enemyName=Enemy.ENEMIC1;
-
-        }
+        chechEnemyContact(fixtureA, fixtureB);
 
 		if (fixtureA.getBody().getUserData().equals("Personatge")
 				&& fixtureB.getBody().getUserData().equals("primerObjecte")
@@ -98,7 +75,42 @@ public class GestorContactes implements ContactListener {
 
 	}
 
-	@Override
+    private void chechEnemyContact(Fixture fixtureA, Fixture fixtureB) {
+        if ((fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)
+                && fixtureB.getBody().getUserData().toString().startsWith("enemy"))
+                || fixtureA.getBody().getUserData().toString().startsWith("enemy")){
+            enemyName=Enemy.ENEMIC1;
+
+        }
+    }
+
+    private void checkEsborrar(Fixture fixtureA, Fixture fixtureB) {
+        if((fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)||fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1))&&
+                (fixtureA.getBody().getUserData().equals("Personatge")||fixtureB.getBody().getUserData().equals("Personatge"))){
+
+            if(fixtureA.getBody().getUserData().equals("Personatge")){
+                bodyDestroyList.add(fixtureA.getBody());
+            }else{
+                bodyDestroyList.add(fixtureB.getBody());
+            }
+
+        }
+    }
+
+    private void checkCrapContact(Fixture fixtureA, Fixture fixtureB){
+        if (fixtureA.getBody().getUserData().equals("Personatge")
+                && fixtureB.getBody().getUserData().equals(Crap.CRAP)
+                || fixtureA.getBody().getUserData().equals(Crap.CRAP)
+                && fixtureB.getBody().getUserData().equals("Personatge")) {
+            if(fixtureA.getBody().getUserData().equals("Personatge")){
+                bodyDestroyList.add(fixtureA.getBody());
+            }else{
+                bodyDestroyList.add(fixtureB.getBody());
+            }
+        }
+    }
+
+    @Override
 	public void endContact(Contact contact) {
 		// TODO Auto-generated method stub
 
