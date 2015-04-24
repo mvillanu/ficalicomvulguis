@@ -51,7 +51,7 @@ public class GestorContactes implements ContactListener {
 		}
 
 
-
+        /*
         if((fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)||fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1))&&
                 (fixtureA.getBody().getUserData().equals("Personatge")||fixtureB.getBody().getUserData().equals("Personatge"))){
 
@@ -62,6 +62,7 @@ public class GestorContactes implements ContactListener {
                 }
 
         }
+        */
 
     /*
         if(fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)||fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1)){
@@ -105,7 +106,6 @@ public class GestorContactes implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		// TODO Auto-generated method stub
 
 	}
 

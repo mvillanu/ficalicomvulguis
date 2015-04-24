@@ -60,9 +60,26 @@ public class Enemy extends Personatge {
             setPersonatgeCaraDreta(false);
         }
 
+
+
+        if (isFerSalt() && isMoureDreta()&&Math.abs(getCos().getLinearVelocity().y) < 1e-9 && yVelocity<5f) {
+            getCos().applyLinearImpulse(new Vector2(2.0f, 5.0f),
+                    getCos().getWorldCenter(), true);
+            setFerSalt(false);
+            long id = getSoSalt().play();
+        }
+
+        if (isFerSalt() && isMoureEsquerra()&&Math.abs(getCos().getLinearVelocity().y) < 1e-9 && yVelocity<5f) {
+            getCos().applyLinearImpulse(new Vector2(-2.0f, 5.0f),
+                    getCos().getWorldCenter(), true);
+            setFerSalt(false);
+            long id = getSoSalt().play();
+        }
+
         if (isFerSalt() && Math.abs(getCos().getLinearVelocity().y) < 1e-9 && yVelocity<5f) {
             getCos().applyLinearImpulse(new Vector2(0.0f, 5.0f),
                     getCos().getWorldCenter(), true);
+            setFerSalt(false);
             long id = getSoSalt().play();
         }
 

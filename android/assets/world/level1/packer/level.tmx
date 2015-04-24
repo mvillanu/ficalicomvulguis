@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="32" tileheight="32" backgroundcolor="#55aaff" nextobjectid="61">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="32" tileheight="32" backgroundcolor="#55aaff" nextobjectid="73">
  <properties>
   <property name="blended tiles" value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16"/>
  </properties>
@@ -67,6 +67,55 @@
     <property name="material" value="ground"/>
    </properties>
    <polyline points="0,0 134,0"/>
+  </object>
+  <object id="63" name="enemyCo" type="fixture" x="180" y="350">
+   <properties>
+    <property name="body" value="enviromental"/>
+    <property name="material" value="booty"/>
+   </properties>
+   <polyline points="0,0 47,0"/>
+  </object>
+  <object id="67" name="enemyCo" type="fixture" x="697" y="348">
+   <properties>
+    <property name="body" value="enviromental"/>
+    <property name="material" value="booty"/>
+   </properties>
+   <polyline points="-1,5 47,5"/>
+  </object>
+  <object id="68" name="enemyCo" type="fixture" x="872" y="346">
+   <properties>
+    <property name="body" value="enviromental"/>
+    <property name="material" value="booty"/>
+   </properties>
+   <polyline points="-1,6 51,6"/>
+  </object>
+  <object id="69" name="enemyCo" type="fixture" x="1124" y="346">
+   <properties>
+    <property name="body" value="enviromental"/>
+    <property name="material" value="booty"/>
+   </properties>
+   <polyline points="-3,9 44,5"/>
+  </object>
+  <object id="70" name="enemyCo" type="fixture" x="1444" y="346">
+   <properties>
+    <property name="body" value="enviromental"/>
+    <property name="material" value="booty"/>
+   </properties>
+   <polyline points="8,17 48,1"/>
+  </object>
+  <object id="71" name="enemyCo" type="fixture" x="1597" y="252">
+   <properties>
+    <property name="body" value="enviromental"/>
+    <property name="material" value="booty"/>
+   </properties>
+   <polyline points="0,0 47,0"/>
+  </object>
+  <object id="72" name="enemyCo" type="fixture" x="1698" y="220">
+   <properties>
+    <property name="body" value="enviromental"/>
+    <property name="material" value="booty"/>
+   </properties>
+   <polyline points="0,0 47,0"/>
   </object>
  </objectgroup>
 </map>
