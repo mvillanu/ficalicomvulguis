@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="32" tileheight="32" backgroundcolor="#55aaff" nextobjectid="60">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="32" tileheight="32" backgroundcolor="#55aaff" nextobjectid="61">
  <properties>
   <property name="blended tiles" value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16"/>
  </properties>
@@ -67,27 +67,6 @@
     <property name="material" value="ground"/>
    </properties>
    <polyline points="0,0 134,0"/>
-  </object>
-  <object id="56" name="cheat1" x="276" y="144">
-   <properties>
-    <property name="body" value="enviromental"/>
-    <property name="material" value="ground"/>
-   </properties>
-   <polyline points="0,0 114,0"/>
-  </object>
-  <object id="57" name="cheat2" x="115" y="321">
-   <properties>
-    <property name="body" value="enviromental"/>
-    <property name="material" value="ground"/>
-   </properties>
-   <polyline points="0,0 160,-179"/>
-  </object>
-  <object id="58" name="cheat3" x="391" y="146">
-   <properties>
-    <property name="body" value="enviromental"/>
-    <property name="material" value="ice"/>
-   </properties>
-   <polyline points="0,0 467,233"/>
   </object>
  </objectgroup>
 </map>

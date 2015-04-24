@@ -33,47 +33,61 @@ public class Personatge {
     private Texture stoppedTexture;     // la seva textura
     private Sound soSalt;               // el so que reprodueix en saltar
     private Texture animatedTexture;
+    private boolean isAlive;
 
 
     public Personatge(World world) {
         moureEsquerra = moureDreta = ferSalt = false;
-        this.world = world;
+        this.setWorld(world);
         carregarTextures();
         carregarSons();
         crearProtagonista();
+        setAlive(true);
     }
 
     public Personatge(World world, float position, float position2) {
         moureEsquerra = moureDreta = ferSalt = false;
-        this.world = world;
+        this.setWorld(world);
         carregarTextures();
         carregarSons();
         crearProtagonista(position, position2);
+        setAlive(true);
     }
 
-    protected Personatge(World world, String animatedImage, String stoppedImage){
+    public Personatge(World world, String animatedImage, String stoppedImage){
         moureEsquerra = moureDreta = ferSalt = false;
-        this.world = world;
+        this.setWorld(world);
         carregarTextures(animatedImage, stoppedImage);
         carregarSons();
         crearProtagonista();
+        setAlive(true);
     }
+
+    public Personatge(World world, String animatedImage, String stoppedImage, float position, float position2){
+        moureEsquerra = moureDreta = ferSalt = false;
+        this.setWorld(world);
+        carregarTextures(animatedImage, stoppedImage);
+        carregarSons();
+        crearProtagonista(position, position2);
+        setAlive(true);
+    }
+
 
 
     private void carregarTextures() {
-        animatedTexture = new Texture(Gdx.files.internal("imatges/warriorSpriteSheet.png"));
-        animatedTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        setAnimatedTexture(new Texture(Gdx.files.internal("imatges/warriorSpriteSheet.png")));
+        getAnimatedTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        stoppedTexture = new Texture(Gdx.files.internal("imatges/warrior.png"));
-        stoppedTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        setStoppedTexture(new Texture(Gdx.files.internal("imatges/warrior.png")));
+        getStoppedTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     private void carregarTextures(String animatedImage, String stoppedImage) {
-        animatedTexture = new Texture(Gdx.files.internal("imatges/warriorSpriteSheet.png"));
-        animatedTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        setAnimatedTexture(new Texture(Gdx.files.internal(animatedImage)));
+        getAnimatedTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
-        stoppedTexture = new Texture(Gdx.files.internal("imatges/warrior.png"));
-        stoppedTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        setStoppedTexture(new Texture(Gdx.files.internal(stoppedImage)));
+        getStoppedTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     /**
@@ -85,22 +99,22 @@ public class Personatge {
 
 
     private void crearProtagonista(float position1, float position2) {
-        spritePersonatge = new Sprite(animatedTexture);
-        spriteAnimat = new AnimatedSprite(spritePersonatge, FRAME_COLS, FRAME_ROWS, stoppedTexture);
+        setSpritePersonatge(new Sprite(getAnimatedTexture()));
+        spriteAnimat = new AnimatedSprite(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture());
 
         // Definir el tipus de cos i la seva posició
         BodyDef defCos = new BodyDef();
         defCos.type = BodyDef.BodyType.DynamicBody;
         defCos.position.set(position1, position2);
 
-        cos = world.createBody(defCos);
-        cos.setUserData("Personatge");
+        setCos(getWorld().createBody(defCos));
+        getCos().setUserData("Personatge");
         /**
          * Definir les vores de l'sprite
          */
         PolygonShape requadre = new PolygonShape();
-        requadre.setAsBox((spritePersonatge.getWidth() / FRAME_COLS) / (2 * JocDeTrons.PIXELS_PER_METRE),
-                (spritePersonatge.getHeight() / FRAME_ROWS) / (2 * JocDeTrons.PIXELS_PER_METRE));
+        requadre.setAsBox((getSpritePersonatge().getWidth() / FRAME_COLS) / (2 * JocDeTrons.PIXELS_PER_METRE),
+                (getSpritePersonatge().getHeight() / FRAME_ROWS) / (2 * JocDeTrons.PIXELS_PER_METRE));
 
         /**
          * La densitat i fricció del protagonista. Si es modifiquen aquests
@@ -111,29 +125,29 @@ public class Personatge {
         propietats.density = 1.0f;
         propietats.friction = 3.0f;
 
-        cos.setFixedRotation(true);
-        cos.createFixture(propietats);
+        getCos().setFixedRotation(true);
+        getCos().createFixture(propietats);
         requadre.dispose();
     }
 
 
     private void crearProtagonista() {
-        spritePersonatge = new Sprite(animatedTexture);
-        spriteAnimat = new AnimatedSprite(spritePersonatge, FRAME_COLS, FRAME_ROWS, stoppedTexture);
+        setSpritePersonatge(new Sprite(getAnimatedTexture()));
+        spriteAnimat = new AnimatedSprite(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture());
 
         // Definir el tipus de cos i la seva posició
         BodyDef defCos = new BodyDef();
         defCos.type = BodyDef.BodyType.DynamicBody;
         defCos.position.set(1.0f, 3.0f);
 
-        cos = world.createBody(defCos);
-        cos.setUserData("Personatge");
+        setCos(getWorld().createBody(defCos));
+        getCos().setUserData("Personatge");
         /**
          * Definir les vores de l'sprite
          */
         PolygonShape requadre = new PolygonShape();
-        requadre.setAsBox((spritePersonatge.getWidth() / FRAME_COLS) / (2 * JocDeTrons.PIXELS_PER_METRE),
-                (spritePersonatge.getHeight() / FRAME_ROWS) / (2 * JocDeTrons.PIXELS_PER_METRE));
+        requadre.setAsBox((getSpritePersonatge().getWidth() / FRAME_COLS) / (2 * JocDeTrons.PIXELS_PER_METRE),
+                (getSpritePersonatge().getHeight() / FRAME_ROWS) / (2 * JocDeTrons.PIXELS_PER_METRE));
 
         /**
          * La densitat i fricció del protagonista. Si es modifiquen aquests
@@ -144,9 +158,13 @@ public class Personatge {
         propietats.density = 1.0f;
         propietats.friction = 3.0f;
 
-        cos.setFixedRotation(true);
-        cos.createFixture(propietats);
+        getCos().setFixedRotation(true);
+        getCos().createFixture(propietats);
         requadre.dispose();
+    }
+
+    public AnimatedSprite getSpriteAnimat(){
+        return this.spriteAnimat;
     }
 
     public void inicialitzarMoviments() {
@@ -160,12 +178,12 @@ public class Personatge {
      * Actualitza la posició de l'sprite
      */
     public void updatePosition() {
-        spritePersonatge.setPosition(
-                JocDeTrons.PIXELS_PER_METRE * cos.getPosition().x
-                        - spritePersonatge.getWidth() / FRAME_COLS / 2,
-                JocDeTrons.PIXELS_PER_METRE * cos.getPosition().y
-                        - spritePersonatge.getHeight() / FRAME_ROWS / 2);
-        spriteAnimat.setPosition(spritePersonatge.getX(), spritePersonatge.getY());
+        getSpritePersonatge().setPosition(
+                JocDeTrons.PIXELS_PER_METRE * getCos().getPosition().x
+                        - getSpritePersonatge().getWidth() / FRAME_COLS / 2,
+                JocDeTrons.PIXELS_PER_METRE * getCos().getPosition().y
+                        - getSpritePersonatge().getHeight() / FRAME_ROWS / 2);
+        spriteAnimat.setPosition(getSpritePersonatge().getX(), getSpritePersonatge().getY());
     }
 
     public void dibuixar(SpriteBatch batch) {
@@ -182,28 +200,31 @@ public class Personatge {
      * Els impulsos s'apliquen des del centre del protagonista
      */
     public void moure() {
+
+        float xVelocity=getCos().getLinearVelocity().x;
+        float yVelocity=getCos().getLinearVelocity().y;
         if (moureDreta) {
-            cos.applyLinearImpulse(new Vector2(0.1f, 0.0f),
-                    cos.getWorldCenter(), true);
+            getCos().applyLinearImpulse(new Vector2(0.1f, 0.0f),
+                    getCos().getWorldCenter(), true);
             spriteAnimat.setDirection(AnimatedSprite.Direction.RIGHT);
 
-            if (!personatgeCaraDreta) {
-                spritePersonatge.flip(true, false);
+            if (!isPersonatgeCaraDreta()) {
+                getSpritePersonatge().flip(true, false);
             }
-            personatgeCaraDreta = true;
+            setPersonatgeCaraDreta(true);
         } else if (moureEsquerra) {
-            cos.applyLinearImpulse(new Vector2(-0.1f, 0.0f),
-                    cos.getWorldCenter(), true);
+            getCos().applyLinearImpulse(new Vector2(-0.1f, 0.0f),
+                    getCos().getWorldCenter(), true);
             spriteAnimat.setDirection(AnimatedSprite.Direction.LEFT);
-            if (personatgeCaraDreta) {
-                spritePersonatge.flip(true, false);
+            if (isPersonatgeCaraDreta()) {
+                getSpritePersonatge().flip(true, false);
             }
-            personatgeCaraDreta = false;
+            setPersonatgeCaraDreta(false);
         }
 
-        if (ferSalt && Math.abs(cos.getLinearVelocity().y) < 1e-9) {
-            cos.applyLinearImpulse(new Vector2(0.0f, 2.0f),
-                    cos.getWorldCenter(), true);
+        if (ferSalt && Math.abs(getCos().getLinearVelocity().y) < 1e-9) {
+            getCos().applyLinearImpulse(new Vector2(0.0f, 2.0f),
+                    getCos().getWorldCenter(), true);
             long id = soSalt.play();
         }
     }
@@ -233,11 +254,11 @@ public class Personatge {
     }
 
     public boolean isCaraDreta() {
-        return this.personatgeCaraDreta;
+        return this.isPersonatgeCaraDreta();
     }
 
     public void setCaraDreta(boolean caraDreta) {
-        this.personatgeCaraDreta = caraDreta;
+        this.setPersonatgeCaraDreta(caraDreta);
 
     }
 
@@ -250,26 +271,82 @@ public class Personatge {
     }
 
     public Vector2 getPositionBody() {
-        return this.cos.getPosition();
+        return this.getCos().getPosition();
     }
 
     public Vector2 getPositionSprite() {
-        return new Vector2().set(this.spritePersonatge.getX(), this.spritePersonatge.getY());
+        return new Vector2().set(this.getSpritePersonatge().getX(), this.getSpritePersonatge().getY());
     }
 
 
     public Texture getTextura() {
-        return stoppedTexture;
+        return getStoppedTexture();
     }
 
     public void setTextura(Texture textura) {
-        this.stoppedTexture = textura;
+        this.setStoppedTexture(textura);
     }
 
 
     public void dispose() {
-        animatedTexture.dispose();
-        stoppedTexture.dispose();
+        getAnimatedTexture().dispose();
+        getStoppedTexture().dispose();
         soSalt.dispose();
+    }
+
+    public boolean isPersonatgeCaraDreta() {
+        return personatgeCaraDreta;
+    }
+
+    public void setPersonatgeCaraDreta(boolean personatgeCaraDreta) {
+        this.personatgeCaraDreta = personatgeCaraDreta;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+    }
+
+    public Body getCos() {
+        return cos;
+    }
+
+    public void setCos(Body cos) {
+        this.cos = cos;
+    }
+
+    public Sprite getSpritePersonatge() {
+        return spritePersonatge;
+    }
+
+    public void setSpritePersonatge(Sprite spritePersonatge) {
+        this.spritePersonatge = spritePersonatge;
+    }
+
+    public Texture getStoppedTexture() {
+        return stoppedTexture;
+    }
+
+    public void setStoppedTexture(Texture stoppedTexture) {
+        this.stoppedTexture = stoppedTexture;
+    }
+
+    public Texture getAnimatedTexture() {
+        return animatedTexture;
+    }
+
+    public void setAnimatedTexture(Texture animatedTexture) {
+        this.animatedTexture = animatedTexture;
+    }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean isAlive) {
+        this.isAlive = isAlive;
     }
 }

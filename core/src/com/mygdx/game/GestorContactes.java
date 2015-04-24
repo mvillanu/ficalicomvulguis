@@ -18,30 +18,71 @@ import java.util.ArrayList;
 public class GestorContactes implements ContactListener {
 	// de moment, no implementat
 	private ArrayList<Body> bodyDestroyList;
+    private String enemyName;
 
 	public GestorContactes() {
-		
+		enemyName=null;
+        bodyDestroyList = new ArrayList<Body>();
+
 	}
-	
+
+    public String enemyMustJump(){
+        return enemyName;
+    }
+    public void resetEnemyName(){enemyName=null;}
+
+    public ArrayList<Body> getBodyDestroyList(){
+        return bodyDestroyList;
+    }
 	public GestorContactes(ArrayList<Body> bodyDestroyList) {
 		this.bodyDestroyList = bodyDestroyList;
 	}
 	@Override
 	public void beginContact(Contact contact) {
+
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
-		Gdx.app.log("beginContact", "entre " + fixtureA.toString() + " i "
-				+ fixtureB.toString());
+		Gdx.app.log("beginContact", "entre " + fixtureA.getBody().getUserData() + " i "
+				+ fixtureB.getBody().getUserData().toString());
 
 		if (fixtureA.getBody().getUserData() == null
 				|| fixtureB.getBody().getUserData() == null) {
 			return;
 		}
 
-		if (fixtureA.getBody().getUserData().equals("stark")
+
+
+        if((fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)||fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1))&&
+                (fixtureA.getBody().getUserData().equals("Personatge")||fixtureB.getBody().getUserData().equals("Personatge"))){
+
+                if(fixtureA.getBody().getUserData().equals("Personatge")){
+                    bodyDestroyList.add(fixtureA.getBody());
+                }else{
+                    bodyDestroyList.add(fixtureB.getBody());
+                }
+
+        }
+
+    /*
+        if(fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)||fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1)){
+            if((!fixtureA.getBody().getUserData().equals("stark"))&&(!fixtureB.getBody().getUserData().equals("stark"))){
+                enemyName=Enemy.ENEMIC1;
+            }
+        }
+    */
+
+        if ((fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)
+                && fixtureB.getBody().getUserData().toString().startsWith("enemy"))
+                || fixtureA.getBody().getUserData().toString().startsWith("enemy")){
+            enemyName=Enemy.ENEMIC1;
+
+        }
+
+		if (fixtureA.getBody().getUserData().equals("Personatge")
 				&& fixtureB.getBody().getUserData().equals("primerObjecte")
 				|| fixtureA.getBody().getUserData().equals("primerObjecte")
-				&& fixtureB.getBody().getUserData().equals("stark")) {
+				&& fixtureB.getBody().getUserData().equals("Personatge")) {
+
 			Gdx.app.log("HIT", "stark ha topat amb el primer objecte");
 			/*
 			 * Afegir cos a destruir
