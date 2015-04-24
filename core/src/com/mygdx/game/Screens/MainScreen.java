@@ -6,22 +6,20 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.mygdx.game.Crap;
+import com.mygdx.game.Bird;
 import com.mygdx.game.Enemy;
 import com.mygdx.game.GestorContactes;
 import com.mygdx.game.JocDeTrons;
 import com.mygdx.game.MapBodyManager;
 import com.mygdx.game.Personatge;
 import com.mygdx.game.TiledMapHelper;
-
-import java.util.ArrayList;
+import com.badlogic.gdx.physics.box2d.Body;
 
 /**
  * Una pantalla del joc
@@ -43,9 +41,10 @@ public class MainScreen extends AbstractScreen {
 
 	// objecte que gestiona el protagonista del joc
 	// ---->private PersonatgeBackup personatge;
-    private Personatge personatge;
-    private Enemy enemic;
-    private ArrayList<Crap> crapList;
+    Personatge personatge;
+    Enemy enemic;
+    Bird bird;
+
 
 
 
@@ -113,6 +112,7 @@ public class MainScreen extends AbstractScreen {
 		// crear el personatge
         personatge = new Personatge(world);
         enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma.png",1.0f, 3.0f, Enemy.ENEMIC1);
+        bird = new Bird(world,"imatges/angrybirdSprite.png",null,1.0f, 3.0f,5, 3, "Bird");
         // objecte que permet debugar les col·lisions
 		//debugRenderer = new Box2DDebugRenderer();
 	}
@@ -246,7 +246,7 @@ public class MainScreen extends AbstractScreen {
 		tiledMapHelper.setPackerDirectory("world/level1/packer");
 		tiledMapHelper.loadMap("world/level1/packer/level.tmx");
 		tiledMapHelper.prepareCamera(joc.getScreenWidth(),
-				joc.getScreenHeight());
+                joc.getScreenHeight());
 	}
 
 	/**
@@ -278,6 +278,7 @@ public class MainScreen extends AbstractScreen {
 	public void render(float delta) {
 		 personatge.inicialitzarMoviments();
          enemic.inicialitzarMoviments();
+         bird.inicialitzarMoviments();
 		 tractarEventsEntrada();
         //enemic.setMoureDreta(true);
         /*
@@ -288,7 +289,6 @@ public class MainScreen extends AbstractScreen {
 
 	     personatge.moure();
          personatge.updatePosition();
-
         String enemyJump=null;
         if ((enemyJump=gestorContactes.enemyMustJump())!=null){
             gestorContactes.resetEnemyName();
@@ -297,8 +297,10 @@ public class MainScreen extends AbstractScreen {
 
         enemic.moure();
         enemic.updatePosition();
+        bird.moure();
+        bird.updatePosition();
 
-        eliminarCossos();
+
         /**
          * Cal actualitzar les posicions i velocitats de tots els objectes. El
          * primer paràmetre és la quanitat de frames/segon que dibuixaré
@@ -328,9 +330,7 @@ public class MainScreen extends AbstractScreen {
 		batch.begin();
     		personatge.dibuixar(batch);
             enemic.dibuixar(batch);
-            //checkCrapList();
-
-
+            bird.dibuixar(batch);
 	    	// finalitzar el lot: a partir d'aquest moment es dibuixa tot el que
 		    // s'ha indicat entre begin i end
 		batch.end();
@@ -343,21 +343,6 @@ public class MainScreen extends AbstractScreen {
 		//		JocDeTrons.PIXELS_PER_METRE, JocDeTrons.PIXELS_PER_METRE,
 		//		JocDeTrons.PIXELS_PER_METRE));
 	}
-
-    private void checkCrapList() {
-        if(crapList.size()>0){
-            for(int i=0;i<crapList.size();i++){
-                if(!crapList.get(i).isAlive()){
-                    crapList.get(i).dibuixar(batch);
-                }else{
-                    crapList.remove(0);
-                }
-
-            }
-
-        }
-    }
-
 
     private void eliminarCossos(){
         /*
@@ -394,6 +379,7 @@ public class MainScreen extends AbstractScreen {
 		world.dispose();
 		personatge.dispose();
         enemic.dispose();
+        bird.dispose();
 	}
 
     public void show() {
