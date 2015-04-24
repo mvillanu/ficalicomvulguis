@@ -328,7 +328,7 @@ public class MainScreen extends AbstractScreen {
 		batch.begin();
     		personatge.dibuixar(batch);
             enemic.dibuixar(batch);
-            checkCrapList();
+            //checkCrapList();
 
 
 	    	// finalitzar el lot: a partir d'aquest moment es dibuixa tot el que
@@ -347,8 +347,14 @@ public class MainScreen extends AbstractScreen {
     private void checkCrapList() {
         if(crapList.size()>0){
             for(int i=0;i<crapList.size();i++){
-                crapList.get(i).dibuixar(batch);
+                if(!crapList.get(i).isAlive()){
+                    crapList.get(i).dibuixar(batch);
+                }else{
+                    crapList.remove(0);
+                }
+
             }
+
         }
     }
 

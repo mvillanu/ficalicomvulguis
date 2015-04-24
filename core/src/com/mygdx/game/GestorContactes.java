@@ -102,11 +102,10 @@ public class GestorContactes implements ContactListener {
                 && fixtureB.getBody().getUserData().equals(Crap.CRAP)
                 || fixtureA.getBody().getUserData().equals(Crap.CRAP)
                 && fixtureB.getBody().getUserData().equals("Personatge")) {
-            if(fixtureA.getBody().getUserData().equals("Personatge")){
                 bodyDestroyList.add(fixtureA.getBody());
-            }else{
+
                 bodyDestroyList.add(fixtureB.getBody());
-            }
+
         }
     }
 
