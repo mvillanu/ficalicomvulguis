@@ -61,8 +61,8 @@ public class Bird extends Personatge {
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
 
-        if (getCos().getPosition().y < 5.0f) {
-            getCos().applyLinearImpulse(new Vector2(0.4f, 1.0f),
+        if (getCos().getPosition().y < 6.0f) {
+            getCos().applyLinearImpulse(new Vector2(0.0f, 1.5f),
                     getCos().getWorldCenter(), true);
         }
 
