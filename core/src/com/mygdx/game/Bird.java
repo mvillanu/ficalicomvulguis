@@ -9,36 +9,41 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.ArrayList;
+
 /**
  * Created by Albert on 24/04/2015.
  */
 public class Bird extends Personatge {
 
-    //ArrayList<Crap> ammo;
+    private Crap ammo;
+    private int lastTime;
+    private int shitNumber = 0;
 
     public Bird(World world) {
         super(world);
-        //ammo.add(new Crap());
+        ammo = new Crap(world);
     }
 
     public Bird(World world, float position, float position2) {
         super(world, position, position2);
-        //ammo.add(new Crap());
+        ammo = new Crap(world,position,position2);
     }
 
     public Bird(World world, String animatedImage, String stoppedImage) {
         super(world, animatedImage, stoppedImage);
-        //ammo.add(new Crap());
+        ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif");
     }
 
     public Bird(World world, String animatedImage, String stoppedImage, float position, float position2) {
         super(world, animatedImage, stoppedImage, position, position2);
-        //ammo.add(new Crap());
+        ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",position,position2);
     }
 
     public Bird(World world, String animatedImage, String stoppedImage, float position, float position2, int frame_cols, int frame_rows, String tag) {
         super(world, animatedImage, stoppedImage, position, position2, frame_cols, frame_rows);
         getCos().setUserData(tag);
+        ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",position,position2);
     }
 
     public void inicialitzarMoviments() {
@@ -62,12 +67,12 @@ public class Bird extends Personatge {
         float yVelocity=getCos().getLinearVelocity().y;
 
         if (getCos().getPosition().y < 6.0f) {
-            getCos().applyLinearImpulse(new Vector2(0.0f, 1.5f),
+            getCos().applyLinearImpulse(new Vector2(0.0f, 2.0f),
                     getCos().getWorldCenter(), true);
         }
 
 
-        if (isMoureDreta() && xVelocity<2.2f) {
+        if (isMoureDreta() && xVelocity<1.0f) {
             getCos().applyLinearImpulse(new Vector2(0.4f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
@@ -110,11 +115,21 @@ public class Bird extends Personatge {
     }
 
 
-    private void spawnShit(){
-
-
-
+    private int getSysTime(){
+        return (int) System.nanoTime()/1000000000;
     }
+
+    public Crap getCrap(){
+        return ammo;
+    }
+
+    public Crap spawnShit(World world){
+        if(getSysTime()-lastTime>5){
+            ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",getCos().getPosition().x,getCos().getPosition().y);
+        }
+        return ammo;
+    }
+
 
     public boolean isReadyToShit(){
 

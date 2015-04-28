@@ -64,7 +64,7 @@ public class GestorContactes implements ContactListener {
 			Gdx.app.log("HIT", "stark ha topat amb el primer objecte");
 			/*
 			 * Afegir cos a destruir
-			 * 
+			 *
 			 * if(!fixtureA.getBody().getUserData().equals("stark")) {
 				bodyDestroyList.add(fixtureA.getBody());
 			} else {

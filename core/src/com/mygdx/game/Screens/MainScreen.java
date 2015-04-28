@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.mygdx.game.Bird;
 import com.mygdx.game.Enemy;
 import com.mygdx.game.GestorContactes;
 import com.mygdx.game.ImagesPath;
@@ -46,6 +47,7 @@ public class MainScreen extends AbstractScreen {
 	// objecte que gestiona el protagonista del joc
 	// ---->private PersonatgeBackup personatge;
     private Personatge personatge;
+    private Bird bird;
     private Enemy enemic;
     private Tornado tornado;
 
@@ -116,6 +118,7 @@ public class MainScreen extends AbstractScreen {
 
 		// crear el personatge
         personatge = new Personatge(world);
+        bird = new Bird(world,"imatges/angrybirdSprite_sensefons.png",null,1.0f, 8.0f, 5,3, "bird");
         enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Enemy.ENEMIC1);
         tornado= new Tornado(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Tornado.TORNADO);
         enemyList=new ArrayList<Personatge>();
@@ -287,6 +290,7 @@ public class MainScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		 personatge.inicialitzarMoviments();
+         bird.inicialitzarMoviments();
          //enemic.inicialitzarMoviments();
         tornado.inicialitzarMoviments();
 		 tractarEventsEntrada();
@@ -303,6 +307,8 @@ public class MainScreen extends AbstractScreen {
         tornado.updatePosition();
 	     personatge.moure();
          personatge.updatePosition();
+        bird.moure();
+        bird.updatePosition();
         moveEnemies();
 
         String enemyJump=null;
@@ -345,6 +351,7 @@ public class MainScreen extends AbstractScreen {
 		// iniciar el lot
 		batch.begin();
     		personatge.dibuixar(batch);
+            bird.dibuixar(batch);
             //enemic.dibuixar(batch);
             tornado.dibuixar(batch);
             //checkCrapList();
@@ -398,7 +405,6 @@ public class MainScreen extends AbstractScreen {
 
 
 
-
     private void eliminarCossos(){
         /*
 		 * per destruir cossos marcats per ser eliminats
@@ -433,6 +439,7 @@ public class MainScreen extends AbstractScreen {
 		musica.dispose();
 		world.dispose();
 		personatge.dispose();
+        bird.dispose();
         enemic.dispose();
         tornado.dispose();
 	}
