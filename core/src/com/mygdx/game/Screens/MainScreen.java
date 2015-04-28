@@ -13,13 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.mygdx.game.Crap;
 import com.mygdx.game.Enemy;
 import com.mygdx.game.GestorContactes;
 import com.mygdx.game.JocDeTrons;
 import com.mygdx.game.MapBodyManager;
 import com.mygdx.game.Personatge;
 import com.mygdx.game.TiledMapHelper;
+import com.mygdx.game.Tornado;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public class MainScreen extends AbstractScreen {
 	// ---->private PersonatgeBackup personatge;
     private Personatge personatge;
     private Enemy enemic;
-    private ArrayList<Crap> crapList;
+    private Tornado tornado;
 
 
 
@@ -80,6 +80,7 @@ public class MainScreen extends AbstractScreen {
     private Label title;
     private Table table = new Table();
     private GestorContactes gestorContactes;
+    private ArrayList<Personatge> enemyList;
 
     /**
      * per indicar quins cossos s'han de destruir
@@ -103,7 +104,7 @@ public class MainScreen extends AbstractScreen {
 		carregarMapa();
 		carregarObjectes();
 		carregarMusica();
-
+        lastTime=0;
         gestorContactes=new GestorContactes();
         // --- si es volen destruir objectes, descomentar ---
 		//bodyDestroyList= new ArrayList<Body>();
@@ -113,6 +114,8 @@ public class MainScreen extends AbstractScreen {
 		// crear el personatge
         personatge = new Personatge(world);
         enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma.png",1.0f, 3.0f, Enemy.ENEMIC1);
+        tornado= new Tornado(world,"imatges/pumaSprite.png","imatges/puma.png",1.0f, 3.0f, Tornado.TORNADO);
+        enemyList=new ArrayList<Personatge>();
         // objecte que permet debugar les col·lisions
 		//debugRenderer = new Box2DDebugRenderer();
 	}
@@ -194,14 +197,13 @@ public class MainScreen extends AbstractScreen {
 				if (Gdx.input.isTouched(i)
 						&& Gdx.input.getX() > Gdx.graphics.getWidth() * 0.80f) {
 					personatge.setMoureDreta(true);
-                    enemic.setMoureDreta(true);
 				}
 			}
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT)) {
 			personatge.setMoureEsquerra(true);
-            enemic.setMoureEsquerra(true);
+            //enemic.setMoureEsquerra(true);
 		} else {
 			for (int i = 0; i < 2; i++) {
 				if (Gdx.input.isTouched(i)
@@ -277,26 +279,34 @@ public class MainScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		 personatge.inicialitzarMoviments();
-         enemic.inicialitzarMoviments();
+         //enemic.inicialitzarMoviments();
+        tornado.inicialitzarMoviments();
 		 tractarEventsEntrada();
+        spawnEnemy();
+
         //enemic.setMoureDreta(true);
         /*
         MOU L'ENEMIC SEGONS LA POSICIÓ DEL JUGADOR
          */
 
-        checkMovimentEnemic();
+        checkMovimentEnemic(enemic);
 
+        tornado.moure();
+        tornado.updatePosition();
 	     personatge.moure();
          personatge.updatePosition();
+        moveEnemies();
 
         String enemyJump=null;
         if ((enemyJump=gestorContactes.enemyMustJump())!=null){
             gestorContactes.resetEnemyName();
-            enemic.setFerSalt(true);
+        //    enemic.setFerSalt(true);
         }
 
-        enemic.moure();
-        enemic.updatePosition();
+
+
+       //enemic.moure();
+        //enemic.updatePosition();
 
         eliminarCossos();
         /**
@@ -327,9 +337,10 @@ public class MainScreen extends AbstractScreen {
 		// iniciar el lot
 		batch.begin();
     		personatge.dibuixar(batch);
-            enemic.dibuixar(batch);
+            //enemic.dibuixar(batch);
+            tornado.dibuixar(batch);
             //checkCrapList();
-
+        printEnemies();
 
 	    	// finalitzar el lot: a partir d'aquest moment es dibuixa tot el que
 		    // s'ha indicat entre begin i end
@@ -344,19 +355,35 @@ public class MainScreen extends AbstractScreen {
 		//		JocDeTrons.PIXELS_PER_METRE));
 	}
 
-    private void checkCrapList() {
-        if(crapList.size()>0){
-            for(int i=0;i<crapList.size();i++){
-                if(!crapList.get(i).isAlive()){
-                    crapList.get(i).dibuixar(batch);
-                }else{
-                    crapList.remove(0);
-                }
+    private long lastTime;
 
-            }
-
+    private void printEnemies(){
+        for(Personatge x : enemyList) {
+            x.dibuixar(batch);
         }
     }
+    private void moveEnemies(){
+        for(Personatge x : enemyList){
+            x.inicialitzarMoviments();
+            checkMovimentEnemic(x);
+            x.setMoureDreta(true);
+            x.moure();
+            x.updatePosition();
+        }
+    }
+    private void spawnEnemy(){
+        Gdx.app.log("time", String.valueOf(getSysTime()-lastTime));
+        if(getSysTime()-lastTime>5){
+            enemyList.add(new Enemy(world,"imatges/pumaSprite.png","imatges/puma.png",tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, Enemy.ENEMIC1));
+            lastTime=getSysTime();
+        }
+    }
+
+    private long getSysTime(){
+
+        return System.currentTimeMillis()/1000;
+    }
+
 
 
     private void eliminarCossos(){
@@ -375,7 +402,7 @@ public class MainScreen extends AbstractScreen {
         }
     }
 
-    private void checkMovimentEnemic() {
+    private void checkMovimentEnemic(Personatge enemic) {
         if(personatge.isAlive()) {
             if (enemic.getPositionBody().x < personatge.getPositionBody().x) {
                 enemic.setMoureDreta(true);
@@ -394,6 +421,7 @@ public class MainScreen extends AbstractScreen {
 		world.dispose();
 		personatge.dispose();
         enemic.dispose();
+        tornado.dispose();
 	}
 
     public void show() {

@@ -130,6 +130,7 @@ public class Personatge {
 
         getCos().setFixedRotation(true);
         getCos().createFixture(propietats);
+
         requadre.dispose();
     }
 

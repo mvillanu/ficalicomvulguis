@@ -95,19 +95,42 @@ public class GestorContactes implements ContactListener {
             }
 
         }
+
+        if((fixtureA.getBody().getUserData().equals(Tornado.TORNADO)||fixtureB.getBody().getUserData().equals(Tornado.TORNADO))&&
+                (fixtureA.getBody().getUserData().equals("Personatge")||fixtureB.getBody().getUserData().equals("Personatge"))){
+
+            if(fixtureA.getBody().getUserData().equals("Personatge")){
+                bodyDestroyList.add(fixtureA.getBody());
+            }else{
+                bodyDestroyList.add(fixtureB.getBody());
+            }
+
+        }
     }
 
+
+
     private void checkCrapContact(Fixture fixtureA, Fixture fixtureB){
-        if (fixtureA.getBody().getUserData().equals("Personatge")
+        if (fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)
                 && fixtureB.getBody().getUserData().equals(Crap.CRAP)
                 || fixtureA.getBody().getUserData().equals(Crap.CRAP)
-                && fixtureB.getBody().getUserData().equals("Personatge")) {
+                && fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1)) {
                 bodyDestroyList.add(fixtureA.getBody());
 
                 bodyDestroyList.add(fixtureB.getBody());
 
         }
+
+        if(fixtureA.getBody().getUserData().equals(Crap.CRAP)&&fixtureB.getBody().getUserData().equals("terra1")||
+                fixtureA.getBody().getUserData().equals("terra1")&&fixtureB.getBody().getUserData().equals(Crap.CRAP) ){
+            if(fixtureA.getBody().getUserData().equals(Crap.CRAP)){
+                bodyDestroyList.add(fixtureA.getBody());
+            }else{
+                bodyDestroyList.add(fixtureB.getBody());
+            }
+        }
     }
+
 
     @Override
 	public void endContact(Contact contact) {
