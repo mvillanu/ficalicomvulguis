@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.Enemy;
 import com.mygdx.game.GestorContactes;
+import com.mygdx.game.ImagesPath;
 import com.mygdx.game.JocDeTrons;
 import com.mygdx.game.MapBodyManager;
 import com.mygdx.game.Personatge;
@@ -22,6 +23,7 @@ import com.mygdx.game.TiledMapHelper;
 import com.mygdx.game.Tornado;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Una pantalla del joc
@@ -81,6 +83,7 @@ public class MainScreen extends AbstractScreen {
     private Table table = new Table();
     private GestorContactes gestorContactes;
     private ArrayList<Personatge> enemyList;
+    private ArrayList<ImagesPath> imagesPath;
 
     /**
      * per indicar quins cossos s'han de destruir
@@ -113,9 +116,14 @@ public class MainScreen extends AbstractScreen {
 
 		// crear el personatge
         personatge = new Personatge(world);
-        enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma.png",1.0f, 3.0f, Enemy.ENEMIC1);
-        tornado= new Tornado(world,"imatges/pumaSprite.png","imatges/puma.png",1.0f, 3.0f, Tornado.TORNADO);
+        enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Enemy.ENEMIC1);
+        tornado= new Tornado(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Tornado.TORNADO);
         enemyList=new ArrayList<Personatge>();
+        imagesPath= new ArrayList<ImagesPath>();
+        imagesPath.add(new ImagesPath("imatges/puma_s.png","imatges/pumaSprite.png"));
+        imagesPath.add(new ImagesPath("imatges/warrior.png","imatges/vestruç.png"));
+        imagesPath.add(new ImagesPath("imatges/warrior.png","imatges/sharkftw.png"));
+
         // objecte que permet debugar les col·lisions
 		//debugRenderer = new Box2DDebugRenderer();
 	}
@@ -357,6 +365,8 @@ public class MainScreen extends AbstractScreen {
 
     private long lastTime;
 
+
+
     private void printEnemies(){
         for(Personatge x : enemyList) {
             x.dibuixar(batch);
@@ -366,15 +376,16 @@ public class MainScreen extends AbstractScreen {
         for(Personatge x : enemyList){
             x.inicialitzarMoviments();
             checkMovimentEnemic(x);
-            x.setMoureDreta(true);
+            //x.setMoureDreta(true);
             x.moure();
             x.updatePosition();
         }
     }
     private void spawnEnemy(){
         Gdx.app.log("time", String.valueOf(getSysTime()-lastTime));
+        Collections.shuffle(imagesPath);
         if(getSysTime()-lastTime>5){
-            enemyList.add(new Enemy(world,"imatges/pumaSprite.png","imatges/puma.png",tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, Enemy.ENEMIC1));
+            enemyList.add(new Enemy(world,imagesPath.get(0).getAnimatedImage(),imagesPath.get(0).getStoppedImage(),tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, Enemy.ENEMIC1));
             lastTime=getSysTime();
         }
     }
@@ -383,6 +394,7 @@ public class MainScreen extends AbstractScreen {
 
         return System.currentTimeMillis()/1000;
     }
+
 
 
 
