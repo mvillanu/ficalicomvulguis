@@ -398,6 +398,7 @@ public class MainScreen extends AbstractScreen {
 
 
 
+
     private void eliminarCossos(){
         /*
 		 * per destruir cossos marcats per ser eliminats
