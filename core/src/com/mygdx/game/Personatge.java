@@ -72,7 +72,14 @@ public class Personatge {
         setAlive(true);
     }
 
-
+    public Personatge(World world, String animatedImage, String stoppedImage, float position1, float position2, int frame_cols, int frame_rows){
+        moureEsquerra = moureDreta = ferSalt = false;
+        this.setWorld(world);
+        carregarTextures(animatedImage, stoppedImage);
+        carregarSons();
+        crearProtagonista(position1, position2, frame_cols, frame_rows);
+        setAlive(true);
+    }
 
     private void carregarTextures() {
         setAnimatedTexture(new Texture(Gdx.files.internal("imatges/warriorSpriteSheet.png")));
@@ -166,6 +173,39 @@ public class Personatge {
         getCos().createFixture(propietats);
         requadre.dispose();
     }
+
+    private void crearProtagonista(float position1, float position2, int frame_cols, int frame_rows) {
+        setSpritePersonatge(new Sprite(getAnimatedTexture()));
+        spriteAnimat = new AnimatedSprite(getSpritePersonatge(), frame_cols, frame_rows, getStoppedTexture());
+
+        // Definir el tipus de cos i la seva posició
+        BodyDef defCos = new BodyDef();
+        defCos.type = BodyDef.BodyType.DynamicBody;
+        defCos.position.set(position1, position2);
+
+        setCos(getWorld().createBody(defCos));
+        getCos().setUserData("Personatge");
+        /**
+         * Definir les vores de l'sprite
+         */
+        PolygonShape requadre = new PolygonShape();
+        requadre.setAsBox((getSpritePersonatge().getWidth() / frame_cols) / (2 * JocDeTrons.PIXELS_PER_METRE),
+                (getSpritePersonatge().getHeight() / frame_rows) / (2 * JocDeTrons.PIXELS_PER_METRE));
+
+        /**
+         * La densitat i fricció del protagonista. Si es modifiquen aquests
+         * valor anirà més ràpid o més lent.
+         */
+        FixtureDef propietats = new FixtureDef();
+        propietats.shape = requadre;
+        propietats.density = 1.0f;
+        propietats.friction = 3.0f;
+
+        getCos().setFixedRotation(true);
+        getCos().createFixture(propietats);
+        requadre.dispose();
+    }
+
 
     public AnimatedSprite getSpriteAnimat(){
         return this.spriteAnimat;
