@@ -121,6 +121,7 @@ public class GestorContactes implements ContactListener {
 
         }
 
+
         if(fixtureA.getBody().getUserData().equals(Crap.CRAP)&&fixtureB.getBody().getUserData().equals("terra1")||
                 fixtureA.getBody().getUserData().equals("terra1")&&fixtureB.getBody().getUserData().equals(Crap.CRAP) ){
             if(fixtureA.getBody().getUserData().equals(Crap.CRAP)){
