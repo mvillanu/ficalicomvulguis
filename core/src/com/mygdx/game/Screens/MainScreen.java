@@ -442,6 +442,9 @@ public class MainScreen extends AbstractScreen {
         bird.dispose();
         enemic.dispose();
         tornado.dispose();
+        for(Personatge p : enemyList){
+            p.dispose();
+        }
 	}
 
     public void show() {
