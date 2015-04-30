@@ -32,7 +32,7 @@ public class Enemy extends Personatge {
         setMoureDreta(false);
         setMoureEsquerra(false);
         setFerSalt(false);
-        super.getSpriteAnimat().setDirection(AnimatedSprite.Direction.STOPPED);
+        super.getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
     }
 
     @Override

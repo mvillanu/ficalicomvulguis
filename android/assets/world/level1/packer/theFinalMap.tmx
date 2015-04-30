@@ -18,201 +18,195 @@
   </data>
  </layer>
  <objectgroup name="Box2D">
-  <object id="1" type="fixture" x="0" y="288" width="1118" height="192">
+  <object id="1" name="greenZone1" type="fixture" x="0" y="288" width="1118" height="192">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="3" type="fixture" x="1120" y="476">
+  <object id="3" name="greenEdge1" type="fixture" x="1120" y="476">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
    <polyline points="0,0 32,0 32,-94 60,-94 60,-110 30,-110 30,-142 4,-142 4,-4"/>
   </object>
-  <object id="4" type="fixture" x="1342" y="296">
+  <object id="4" name="greenEdge2" type="fixture" x="1342" y="296">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
    <polyline points="0,0 -28,0 -28,28 -58,28 -58,56 -92,58 -92,84 -64,84 -64,180 34,180 34,-2 2,0"/>
   </object>
-  <object id="5" type="fixture" x="1122" y="224" width="60" height="30">
+  <object id="5" name="greenZonePlat1" type="fixture" x="1122" y="224" width="60" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="6" type="fixture" x="1218" y="160" width="58" height="28">
+  <object id="6" name="greenZonePlat2" type="fixture" x="1218" y="160" width="58" height="28">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="7" type="fixture" x="1314" y="96">
+  <object id="7" name="greenZoneWall" type="fixture" x="1314" y="96">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
    <polyline points="0,0 58,0 60,188 30,188 30,32 0,32 0,0"/>
   </object>
-  <object id="9" type="fixture" x="1380" y="290" width="858" height="186">
+  <object id="9" name="greenZone2" type="fixture" x="1380" y="290" width="858" height="186">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="12" type="fixture" x="2722" y="0" width="122" height="186">
+  <object id="12" name="iceCaveEntrance" type="fixture" x="2722" y="0" width="122" height="186">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="14" type="fixture" x="2274" y="224" width="92" height="30">
+  <object id="14" name="greenZonePlat3" type="fixture" x="2274" y="224" width="92" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="15" type="fixture" x="2400" y="320" width="96" height="28">
+  <object id="15" name="greenZonePlat4" type="fixture" x="2400" y="320" width="96" height="28">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="16" type="fixture" x="2560" y="354" width="92" height="26">
+  <object id="16" name="greenZonePlat4" type="fixture" x="2560" y="354" width="92" height="26">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="17" type="fixture" x="2690" y="288" width="60" height="30">
+  <object id="17" name="greenZonePlat5" type="fixture" x="2690" y="288" width="60" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="18" type="fixture" x="2752" y="288" width="860" height="188">
+  <object id="18" name="iceCaveZone1" type="fixture" x="2752" y="288" width="860" height="188">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="19" type="fixture" x="3612" y="290" width="36" height="32">
+  <object id="19" name="iceCaveEdge1" type="fixture" x="3612" y="290" width="36" height="32">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="20" type="fixture" x="3712" y="352" width="62" height="28">
+  <object id="20" name="iceCavePlat1" type="fixture" x="3712" y="352" width="62" height="28">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="21" type="fixture" x="3840" y="318" width="32" height="30">
+  <object id="21" name="iceCavePlat2" type="fixture" x="3840" y="318" width="32" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="22" type="fixture" x="4034" y="294" width="764" height="176">
+  <object id="22" name="iceCaveZone2" type="fixture" x="4034" y="294" width="764" height="176">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="23" type="fixture" x="4412" y="136" width="6">
-   <properties>
-    <property name="body" value="environment"/>
-    <property name="material" value="ground"/>
-   </properties>
-  </object>
-  <object id="24" type="fixture" x="4032" y="320">
+  <object id="24" name="iceCaveEdge2" type="fixture" x="4032" y="320">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
    <polyline points="0,0 -32,0 -32,30 -94,30 -96,60 -160,62 -162,92 -192,94 -192,152 2,148 2,2"/>
   </object>
-  <object id="25" type="fixture" x="5120" y="288" width="220" height="188">
+  <object id="25" name="iceCaveExit" type="fixture" x="5120" y="288" width="220" height="188">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="27" type="fixture" x="4928" y="350" width="62" height="30">
+  <object id="27" name="iceCavePlat3" type="fixture" x="4928" y="350" width="62" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="30" type="fixture" x="5340" y="382" width="100" height="30">
+  <object id="30" name="endPlat1" type="fixture" x="5340" y="382" width="100" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="31" type="fixture" x="5440" y="156" width="32" height="32">
+  <object id="31" name="endPlat2" type="fixture" x="5440" y="156" width="32" height="32">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="32" type="fixture" x="5566" y="350" width="34" height="30">
+  <object id="32" name="endPlat3" type="fixture" x="5566" y="350" width="34" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="33" type="fixture" x="5694" y="222" width="32" height="30">
+  <object id="33" name="endPlat4" type="fixture" x="5694" y="222" width="32" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="36" type="fixture" x="5856" y="350" width="32" height="32">
+  <object id="36" name="endPlat5" type="fixture" x="5856" y="350" width="32" height="32">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="37" type="fixture" x="5952" y="318" width="30" height="32">
+  <object id="37" name="endPlat6" type="fixture" x="5952" y="318" width="30" height="32">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="38" type="fixture" x="6014" y="254" width="32" height="30">
+  <object id="38" name="endPlat7" type="fixture" x="6014" y="254" width="32" height="30">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="39" type="fixture" x="6080" y="224" width="30" height="28">
+  <object id="39" name="endPlat8" type="fixture" x="6080" y="224" width="30" height="28">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="40" type="fixture" x="6080" y="294" width="1086" height="184">
+  <object id="40" name="endZone" type="fixture" x="6080" y="294" width="1086" height="184">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
   </object>
-  <object id="41" type="fixture" x="6078" y="320">
+  <object id="41" name="endEdgeZone" type="fixture" x="6078" y="320">
    <properties>
     <property name="body" value="environment"/>
     <property name="material" value="ground"/>
    </properties>
    <polyline points="0,0 -30,0 -30,30 -60,30 -60,64 -92,66 -90,124 -124,124 -124,158 -6,156 -2,2"/>
   </object>
-  <object id="42" type="fixture" x="7132" y="288">
+  <object id="42" name="endLimit" type="fixture" x="7132" y="288">
    <polyline points="0,0 0,-500"/>
   </object>
-  <object id="43" x="2" y="286">
+  <object id="43" name="startLimit" type="fixture" x="2" y="286">
    <polyline points="0,0 0,-284"/>
   </object>
  </objectgroup>

@@ -87,7 +87,7 @@ public class MainScreen extends AbstractScreen {
     private Table table = new Table();
     private GestorContactes gestorContactes;
     private ArrayList<Crap> crapList;
-    private ArrayList<Personatge> enemyList;
+    private ArrayList<Enemy> enemyList;
     private ArrayList<ImagesPath> imagesPath;
 
     /**
@@ -123,16 +123,16 @@ public class MainScreen extends AbstractScreen {
         personatge = new Personatge(world);
         bird = new Bird(world,"imatges/angrybirdSprite_sensefons.png",null,1.0f, 8.0f, 5,3, "bird");
         enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Enemy.ENEMIC1);
-        tornado= new Tornado(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Tornado.TORNADO);
+        tornado= new Tornado(world,"imatges/tornado.png","imatges/qtornado.png",2.0f, 5.0f, 5, 3, Tornado.TORNADO);
 
 
-        enemyList=new ArrayList<Personatge>();
+        enemyList=new ArrayList<Enemy>();
         crapList= new ArrayList<Crap>();
         ImagesPath crapPath = new ImagesPath("imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif");
         imagesPath= new ArrayList<ImagesPath>();
-        imagesPath.add(new ImagesPath("imatges/puma_s.png","imatges/pumaSprite.png"));
-        imagesPath.add(new ImagesPath("imatges/warrior.png","imatges/vestruç.png"));
-        imagesPath.add(new ImagesPath("imatges/warrior.png","imatges/sharkftw.png"));
+        imagesPath.add(new ImagesPath(/*"imatges/puma_s.png"*/null,"imatges/pumaSprite.png"));
+        imagesPath.add(new ImagesPath(/*"imatges/avestru.png"*/null,"imatges/vestruç.png"));
+        imagesPath.add(new ImagesPath(/*"imatges/shark.png"*/null,"imatges/sharkftw.png"));
 
         // objecte que permet debugar les col·lisions
 		//debugRenderer = new Box2DDebugRenderer();
@@ -374,8 +374,8 @@ public class MainScreen extends AbstractScreen {
         // dibuixar els controls de pantalla
         stage.act();
         stage.draw();
-        Gdx.app.log("bird position:",String.valueOf(bird.getCos().getPosition().x));
-
+        Gdx.app.log("Tornado position:",String.valueOf(tornado.getCos().getPosition().x));
+        Gdx.app.log("Tornado position:",String.valueOf(tornado.getCos().getPosition().y));
 
 
         //debugRenderer.render(world, tiledMapHelper.getCamera().combined.scale(
@@ -402,12 +402,12 @@ public class MainScreen extends AbstractScreen {
     }
 
     private void printEnemies(){
-        for(Personatge x : enemyList) {
+        for(Enemy x : enemyList) {
             x.dibuixar(batch);
         }
     }
     private void moveEnemies(){
-        for(Personatge x : enemyList){
+        for(Enemy x : enemyList){
             x.inicialitzarMoviments();
             checkMovimentEnemic(x);
             //x.setMoureDreta(true);
@@ -418,8 +418,23 @@ public class MainScreen extends AbstractScreen {
     private void spawnEnemy(){
         //Gdx.app.log("time", String.valueOf(getSysTime()-lastTime));
         Collections.shuffle(imagesPath);
-        if(getSysTime()-lastTime>5){
-            enemyList.add(new Enemy(world,imagesPath.get(0).getAnimatedImage(),imagesPath.get(0).getStoppedImage(),tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, Enemy.ENEMIC1));
+        int frame_rows = 2, frame_cols = 6;
+
+        if(getSysTime()-lastTime>10 &&enemyList.size() < 2){
+
+            if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/pumaSprite.png") == 0){
+                frame_cols = 5;
+                frame_rows = 2;
+            } else if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/vestruç.png") == 0){
+                frame_cols = 7;
+                frame_rows = 4;
+            } else if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/sharkftw.png") == 0){
+                frame_cols = 7;
+                frame_rows = 2;
+            }
+
+            Enemy e = new Enemy(world,imagesPath.get(0).getAnimatedImage(),imagesPath.get(0).getStoppedImage(),tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, frame_cols, frame_rows, Enemy.ENEMIC1);
+            enemyList.add(e);
             crapList.add(new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",bird.getCos().getPosition().x-0.5f,bird.getCos().getPosition().y-0.5f,Crap.CRAP));
             lastTime=getSysTime();
         }
@@ -484,4 +499,5 @@ public class MainScreen extends AbstractScreen {
         table.setFillParent(true);
         stage.addActor(table);
     }
+
 }

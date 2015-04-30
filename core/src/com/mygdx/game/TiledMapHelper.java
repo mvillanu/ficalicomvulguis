@@ -140,7 +140,7 @@ public class TiledMapHelper {
 	public void prepareCamera(int screenWidth, int screenHeight) {
 		camera = new OrthographicCamera(screenWidth, screenHeight);
         camera.zoom += 0.5;
-		camera.position.set(screenWidth/2, screenHeight/2, 0);
+		camera.position.set(screenWidth/2, 10+screenHeight/2, 0);
 
 	}
 

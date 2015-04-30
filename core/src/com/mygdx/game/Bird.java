@@ -54,13 +54,13 @@ public class Bird extends Personatge {
     public void inicialitzarMoviments() {
 
         if(getCos().getPosition().x > 10){
-            Gdx.app.log("mou esquerra","puto");
+            //Gdx.app.log("mou esquerra","puto");
             setMoureDreta(false);
             setMoureEsquerra(true);
         } else if(getCos().getPosition().x <= 2){
             setMoureDreta(true);
             setMoureEsquerra(false);
-            Gdx.app.log("mou dreta","puto");
+            //Gdx.app.log("mou dreta","puto");
         }
 
         //setMoureDreta(true);
