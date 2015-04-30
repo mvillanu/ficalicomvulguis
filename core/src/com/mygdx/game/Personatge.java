@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
  * Classe que implementa el protagonista del joc
  */
 public class Personatge {
+    public static final String HERO = "hero";
     public static final int FRAME_COLS = 9;
     public static final int FRAME_ROWS = 2;
     /**
@@ -36,48 +37,51 @@ public class Personatge {
     private boolean isAlive;
 
 
-    public Personatge(World world) {
+    public Personatge(World world, String tag) {
         moureEsquerra = moureDreta = ferSalt = false;
         this.setWorld(world);
         carregarTextures();
         carregarSons();
-        crearProtagonista();
+        crearProtagonista(tag);
         setAlive(true);
     }
 
-    public Personatge(World world, float position, float position2) {
+    public Personatge(World world, float position, float position2, String tag) {
         moureEsquerra = moureDreta = ferSalt = false;
         this.setWorld(world);
         carregarTextures();
         carregarSons();
-        crearProtagonista(position, position2);
+        crearProtagonista(position, position2, tag);
+        getCos().setUserData(tag);
         setAlive(true);
     }
 
-    public Personatge(World world, String animatedImage, String stoppedImage){
+    public Personatge(World world, String animatedImage, String stoppedImage, String tag){
         moureEsquerra = moureDreta = ferSalt = false;
         this.setWorld(world);
         carregarTextures(animatedImage, stoppedImage);
         carregarSons();
-        crearProtagonista();
+        crearProtagonista(tag);
         setAlive(true);
     }
 
-    public Personatge(World world, String animatedImage, String stoppedImage, float position, float position2){
+    public Personatge(World world, String animatedImage, String stoppedImage, float position, float position2, String tag){
         moureEsquerra = moureDreta = ferSalt = false;
         this.setWorld(world);
         carregarTextures(animatedImage, stoppedImage);
         carregarSons();
-        crearProtagonista(position, position2);
+        crearProtagonista(position, position2, tag);
+        getCos().setUserData(tag);
         setAlive(true);
     }
 
-    public Personatge(World world, String animatedImage, String stoppedImage, float position1, float position2, int frame_cols, int frame_rows){
+    public Personatge(World world, String animatedImage, String stoppedImage, float position1, float position2, int frame_cols, int frame_rows, String tag){
         moureEsquerra = moureDreta = ferSalt = false;
         this.setWorld(world);
         carregarTextures(animatedImage, stoppedImage);
         carregarSons();
-        crearProtagonista(position1, position2, frame_cols, frame_rows);
+        crearProtagonista(position1, position2, frame_cols, frame_rows, tag);
+
         setAlive(true);
     }
 
@@ -108,7 +112,38 @@ public class Personatge {
     }
 
 
-    private void crearProtagonista(float position1, float position2) {
+    private void setFilterColisions(FixtureDef propietats){
+        if(getCos().getUserData().toString().equals(Enemy.ENEMIC1) || getCos().getUserData().toString().equals(Enemy.ENEMIC2)){
+            propietats.filter.categoryBits = ColisionsGroups.ENEMIC_ENTITY;
+            propietats.filter.maskBits = ColisionsGroups.MAP_ENTITY | ColisionsGroups.HERO_ENTITY;
+
+        } else if (getCos().getUserData().toString().equals(Tornado.TORNADO)){
+            propietats.filter.categoryBits = ColisionsGroups.TORNADO_ENTITY;
+            propietats.filter.maskBits = 0;
+
+        } else if (getCos().getUserData().toString().equals(Bird.BIRD)){
+            propietats.filter.categoryBits = ColisionsGroups.BIRD_ENTITY;
+            propietats.filter.maskBits = 0;
+        } else if(getCos().getUserData().toString().equals(HERO)){
+            propietats.filter.categoryBits = ColisionsGroups.HERO_ENTITY;
+            propietats.filter.maskBits = ColisionsGroups.MAP_ENTITY | ColisionsGroups.ENEMIC_ENTITY;
+        }
+        String tipus = "nothing for me";
+        if(propietats.filter.categoryBits == ColisionsGroups.BIRD_ENTITY){
+            tipus = "bird";
+        } else if(propietats.filter.categoryBits == ColisionsGroups.ENEMIC_ENTITY){
+            tipus = "enemic";
+        }else if(propietats.filter.categoryBits == ColisionsGroups.TORNADO_ENTITY){
+            tipus = "Tornado";
+        } else if(propietats.filter.categoryBits == ColisionsGroups.HERO_ENTITY) {
+            tipus = "Hero";
+        }
+        Gdx.app.log("GRUP: ",tipus);
+        Gdx.app.log("GRUP: ",getCos().getUserData().toString());
+    }
+
+
+    private void crearProtagonista(float position1, float position2, String tag) {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
         setSpriteAnimat(new AnimatedSprite(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture()));
 
@@ -118,7 +153,7 @@ public class Personatge {
         defCos.position.set(position1, position2);
 
         setCos(getWorld().createBody(defCos));
-        getCos().setUserData("Personatge");
+        getCos().setUserData(tag);
         /**
          * Definir les vores de l'sprite
          */
@@ -135,6 +170,8 @@ public class Personatge {
         propietats.density = 1.0f;
         propietats.friction = 3.0f;
 
+        setFilterColisions(propietats);
+
         getCos().setFixedRotation(true);
         getCos().createFixture(propietats);
 
@@ -142,7 +179,7 @@ public class Personatge {
     }
 
 
-    private void crearProtagonista() {
+    private void crearProtagonista(String tag) {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
         setSpriteAnimat(new AnimatedSprite(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture()));
 
@@ -152,7 +189,7 @@ public class Personatge {
         defCos.position.set(5.0f, 3.0f);
 
         setCos(getWorld().createBody(defCos));
-        getCos().setUserData("Personatge");
+        getCos().setUserData(tag);
         /**
          * Definir les vores de l'sprite
          */
@@ -169,12 +206,14 @@ public class Personatge {
         propietats.density = 1.0f;
         propietats.friction = 3.0f;
 
+        setFilterColisions(propietats);
+
         getCos().setFixedRotation(true);
         getCos().createFixture(propietats);
         requadre.dispose();
     }
 
-    private void crearProtagonista(float position1, float position2, int frame_cols, int frame_rows) {
+    private void crearProtagonista(float position1, float position2, int frame_cols, int frame_rows, String tag) {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
         setSpriteAnimat(new AnimatedSprite(getSpritePersonatge(), frame_cols, frame_rows, getStoppedTexture()));
 
@@ -184,7 +223,7 @@ public class Personatge {
         defCos.position.set(position1, position2);
 
         setCos(getWorld().createBody(defCos));
-        getCos().setUserData("Personatge");
+        getCos().setUserData(tag);
         /**
          * Definir les vores de l'sprite
          */
@@ -200,6 +239,8 @@ public class Personatge {
         propietats.shape = requadre;
         propietats.density = 1.0f;
         propietats.friction = 3.0f;
+
+        setFilterColisions(propietats);
 
         getCos().setFixedRotation(true);
         getCos().createFixture(propietats);

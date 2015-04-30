@@ -16,44 +16,23 @@ import java.util.ArrayList;
  */
 public class Bird extends Personatge {
 
+    public static String BIRD = "bird";
+
     private Crap ammo;
     private int lastTime;
     private int shitNumber = 0;
 
-    public Bird(World world) {
-        super(world);
-        setPersonatgeCaraDreta(true);
-        ammo = new Crap(world);
-    }
-
-    public Bird(World world, float position, float position2) {
-        super(world, position, position2);
-        setPersonatgeCaraDreta(true);
-        ammo = new Crap(world,position,position2);
-    }
-
-    public Bird(World world, String animatedImage, String stoppedImage) {
-        super(world, animatedImage, stoppedImage);
-        setPersonatgeCaraDreta(true);
-        ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif");
-    }
-
-    public Bird(World world, String animatedImage, String stoppedImage, float position, float position2) {
-        super(world, animatedImage, stoppedImage, position, position2);
-        setPersonatgeCaraDreta(true);
-        ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",position,position2);
-    }
 
     public Bird(World world, String animatedImage, String stoppedImage, float position, float position2, int frame_cols, int frame_rows, String tag) {
-        super(world, animatedImage, stoppedImage, position, position2, frame_cols, frame_rows);
-        getCos().setUserData(tag);
+        super(world, animatedImage, stoppedImage, position, position2, frame_cols, frame_rows,tag);
+        //getCos().setUserData(tag);
         setPersonatgeCaraDreta(true);
-        ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",position,position2);
+        //ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",position,position2);
     }
 
     public void inicialitzarMoviments() {
 
-        if(getCos().getPosition().x > 10){
+        if(getCos().getPosition().x > 30){
             //Gdx.app.log("mou esquerra","puto");
             setMoureDreta(false);
             setMoureEsquerra(true);
@@ -121,7 +100,7 @@ public class Bird extends Personatge {
 
     public Crap spawnShit(World world){
         if(getSysTime()-lastTime>5){
-            ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",getCos().getPosition().x,getCos().getPosition().y);
+            //ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",getCos().getPosition().x,getCos().getPosition().y);
         }
         return ammo;
     }

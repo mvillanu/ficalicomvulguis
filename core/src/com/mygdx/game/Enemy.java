@@ -9,22 +9,22 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Enemy extends Personatge {
     public final static String ENEMIC1= "enemic1";
     public final static String ENEMIC2= "enemic2";
-    public Enemy(World world) {
-        super(world);
+    public Enemy(World world,String tag) {
+        super(world,tag);
     }
 
-    public Enemy(World world, String animatedImage, String stoppedImage) {
-        super(world, animatedImage, stoppedImage);
+    public Enemy(World world, String animatedImage, String stoppedImage,String tag) {
+        super(world, animatedImage, stoppedImage, tag);
 
-    }
-
-    public Enemy(World world, String animatedImage, String stoppedImage, float position, float position2) {
-        super(world, animatedImage, stoppedImage, position, position2);
     }
 
     public Enemy(World world, String animatedImage, String stoppedImage, float position, float position2, String tag) {
-        super(world, animatedImage, stoppedImage, position, position2);
-        getCos().setUserData(tag);
+        super(world, animatedImage, stoppedImage, position, position2,tag);
+        //getCos().setUserData(tag);
+    }
+    public Enemy(World world, String animatedImage, String stoppedImage, float position1, float position2, int frame_cols, int frame_rows, String tag){
+        super(world,animatedImage,stoppedImage,position1,position2,frame_cols,frame_rows,tag);
+        //getCos().setUserData(tag);
     }
 
     @Override

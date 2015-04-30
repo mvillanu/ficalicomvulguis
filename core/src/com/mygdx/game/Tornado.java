@@ -8,30 +8,29 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class Tornado extends Enemy {
     public final static String TORNADO="Tornado";
-    public Tornado(World world) {
-        super(world);
+    public Tornado(World world, String tag) {
+        super(world, tag);
     }
 
-    public Tornado(World world, String animatedImage, String stoppedImage) {
-        super(world, animatedImage, stoppedImage);
-    }
-
-    public Tornado(World world, String animatedImage, String stoppedImage, float position, float position2) {
-        super(world, animatedImage, stoppedImage, position, position2);
+    public Tornado(World world, String animatedImage, String stoppedImage, String tag) {
+        super(world, animatedImage, stoppedImage, tag);
     }
 
     public Tornado(World world, String animatedImage, String stoppedImage, float position, float position2, String tag) {
         super(world, animatedImage, stoppedImage, position, position2, tag);
-        //getCos().setGravityScale(0f);
+        getCos().setGravityScale(0f);
         getCos().getFixtureList().get(0).setDensity(0);
         getCos().getFixtureList().get(0).setFriction(0);
     }
 
     public Tornado(World world, String animatedImage, String stoppedImage, float position, float position2,int frame_cols, int frame_rows ,String tag){
         super(world,animatedImage,stoppedImage,position,position2,frame_cols,frame_rows,tag);
-        //getCos().setGravityScale(0f);
+        getCos().setGravityScale(0f);
         getCos().getFixtureList().get(0).setDensity(0);
         getCos().getFixtureList().get(0).setFriction(0);
+        getCos().applyLinearImpulse(new Vector2(5.0f, 0.0f),
+                getCos().getWorldCenter(), true);
+        getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
     }
 
 
@@ -41,6 +40,7 @@ public class Tornado extends Enemy {
         setMoureEsquerra(false);
         setFerSalt(false);
         super.getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
+
     }
 
     @Override
@@ -49,20 +49,20 @@ public class Tornado extends Enemy {
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
 
-       /* if(getCos().getPosition().y < 5 && yVelocity < 0.5 ){
+        /*if(getCos().getPosition().y < 5){
             getCos().applyLinearImpulse(new Vector2(0.0f, 0.1f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
-        } else if(getCos().getPosition().y >= 5 && yVelocity >= 0.5 ){
+        } else if(getCos().getPosition().y >= 5 && yVelocity != 0 ){
             getCos().applyLinearImpulse(new Vector2(0.0f, -0.1f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
         }*/
-        if(isMoureDreta() && xVelocity < 0.5){
+        /*if(isMoureDreta() && xVelocity < 0.5){
             getCos().applyLinearImpulse(new Vector2(0.1f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
-        }
+        }*/
 
        /* if (isMoureDreta() && xVelocity<1.0f) {
             getCos().applyLinearImpulse(new Vector2(0.0f, 0.0f),

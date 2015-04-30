@@ -49,7 +49,7 @@ import com.badlogic.gdx.utils.JsonValue.JsonIterator;
  * 
  */
 public class MapBodyManager {
-	private final short CATEGORIA_ESCENA = 0x0016;
+	public static final short CATEGORIA_ESCENA = ColisionsGroups.MAP_ENTITY;
 	private Logger logger;
 	private World world;
 	private float units;
@@ -151,7 +151,7 @@ public class MapBodyManager {
 
 			fixtureDef.shape = shape;
 			fixtureDef.filter.categoryBits = CATEGORIA_ESCENA;// Env.game.getCategoryBitsManager().getCategoryBits("level");
-
+            fixtureDef.filter.maskBits = -1;
 			Body body = world.createBody(bodyDef);
 			body.createFixture(fixtureDef);
 			body.setUserData(object.getName());

@@ -13,31 +13,25 @@ public class Crap extends Personatge {
 
     public final static String CRAP= "crap";
     private boolean isAlive;
-    public Crap(World world) {
-        super(world);
-        getCos().setUserData(CRAP);
+    public Crap(World world, String tag) {
+        super(world, tag);
+        //getCos().setUserData(CRAP);
     }
 
-    public Crap(World world, float position, float position2) {
-        super(world, position, position2);
+    public Crap(World world, float position, float position2, String tag) {
+        super(world, position, position2, tag);
         getCos().setUserData(CRAP);
         isAlive=true;
     }
 
-    public Crap(World world, String animatedImage, String stoppedImage) {
-        super(world, animatedImage, stoppedImage);
-        getCos().setUserData(CRAP);
-        isAlive=true;
-    }
-
-    public Crap(World world, String animatedImage, String stoppedImage, float position, float position2) {
-        super(world, animatedImage, stoppedImage, position, position2);
-        getCos().setUserData(CRAP);
+    public Crap(World world, String animatedImage, String stoppedImage, String tag) {
+        super(world, animatedImage, stoppedImage, tag);
+        //getCos().setUserData(CRAP);
         isAlive=true;
     }
 
     public Crap(World world, String animatedImage, String stoppedImage, float position, float position2, String tag) {
-        super(world, animatedImage, stoppedImage, position, position2);
+        super(world, animatedImage, stoppedImage, position, position2, tag);
         getCos().setUserData(tag);
         //crearCrap(position,position2,1,1);
         isAlive=true;

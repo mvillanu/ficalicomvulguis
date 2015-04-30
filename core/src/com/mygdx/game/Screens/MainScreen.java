@@ -35,6 +35,8 @@ import java.util.Collections;
  */
 public class MainScreen extends AbstractScreen {
 
+
+    public final static short WORLD_ENTITY = 2;
     /**
      * Estils
      */
@@ -120,10 +122,10 @@ public class MainScreen extends AbstractScreen {
 		world.setContactListener(gestorContactes);
 
 		// crear el personatge
-        personatge = new Personatge(world);
-        bird = new Bird(world,"imatges/angrybirdSprite_sensefons.png",null,1.0f, 8.0f, 5,3, "bird");
+        personatge = new Personatge(world,Personatge.HERO);
+        bird = new Bird(world,"imatges/angrybirdSprite_sensefons.png",null,1.0f, 8.0f, 5,3, Bird.BIRD);
         enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Enemy.ENEMIC1);
-        tornado= new Tornado(world,"imatges/tornado.png","imatges/qtornado.png",2.0f, 5.0f, 5, 3, Tornado.TORNADO);
+        tornado= new Tornado(world,"imatges/epictornadogran.png","imatges/qtornado.png",2.0f, 5.0f, 5, 3, Tornado.TORNADO);
 
 
         enemyList=new ArrayList<Enemy>();
@@ -420,7 +422,7 @@ public class MainScreen extends AbstractScreen {
         Collections.shuffle(imagesPath);
         int frame_rows = 2, frame_cols = 6;
 
-        if(getSysTime()-lastTime>10 &&enemyList.size() < 2){
+        if(getSysTime()-lastTime>10 &&enemyList.size() < 1){
 
             if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/pumaSprite.png") == 0){
                 frame_cols = 5;
