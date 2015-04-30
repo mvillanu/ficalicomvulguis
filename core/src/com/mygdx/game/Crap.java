@@ -1,5 +1,9 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -34,7 +38,8 @@ public class Crap extends Personatge {
 
     public Crap(World world, String animatedImage, String stoppedImage, float position, float position2, String tag) {
         super(world, animatedImage, stoppedImage, position, position2);
-        getCos().setUserData(CRAP);
+        getCos().setUserData(tag);
+        //crearCrap(position,position2,1,1);
         isAlive=true;
     }
 

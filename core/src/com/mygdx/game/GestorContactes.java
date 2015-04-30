@@ -50,6 +50,15 @@ public class GestorContactes implements ContactListener {
 			return;
 		}
 
+        checkCrapContact(fixtureA,fixtureB);
+
+        /*if(fixtureA.getBody().getUserData().equals(Crap.CRAP)&&!fixtureB.getBody().getUserData().equals(Crap.CRAP)){
+            bodyDestroyList.add(fixtureA.getBody());
+            Gdx.app.log("Shit on the ground!","pringue");
+        } else {
+            bodyDestroyList.add(fixtureB.getBody());
+            Gdx.app.log("Shit on the ground!","pringue");
+        }*/
 
 
         //checkEsborrar(fixtureA, fixtureB);
@@ -116,18 +125,19 @@ public class GestorContactes implements ContactListener {
                 || fixtureA.getBody().getUserData().equals(Crap.CRAP)
                 && fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1)) {
                 bodyDestroyList.add(fixtureA.getBody());
-
+            Gdx.app.log("Shit on the enemy!","pringue");
                 bodyDestroyList.add(fixtureB.getBody());
 
         }
-
 
         if(fixtureA.getBody().getUserData().equals(Crap.CRAP)&&fixtureB.getBody().getUserData().equals("terra1")||
                 fixtureA.getBody().getUserData().equals("terra1")&&fixtureB.getBody().getUserData().equals(Crap.CRAP) ){
             if(fixtureA.getBody().getUserData().equals(Crap.CRAP)){
                 bodyDestroyList.add(fixtureA.getBody());
+                Gdx.app.log("Shit on the ground!","pringue");
             }else{
                 bodyDestroyList.add(fixtureB.getBody());
+                Gdx.app.log("Shit on the ground!","pringue");
             }
         }
     }

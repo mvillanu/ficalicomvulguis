@@ -110,7 +110,7 @@ public class Personatge {
 
     private void crearProtagonista(float position1, float position2) {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
-        spriteAnimat = new AnimatedSprite(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture());
+        setSpriteAnimat(new AnimatedSprite(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture()));
 
         // Definir el tipus de cos i la seva posició
         BodyDef defCos = new BodyDef();
@@ -144,7 +144,7 @@ public class Personatge {
 
     private void crearProtagonista() {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
-        spriteAnimat = new AnimatedSprite(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture());
+        setSpriteAnimat(new AnimatedSprite(getSpritePersonatge(), FRAME_COLS, FRAME_ROWS, getStoppedTexture()));
 
         // Definir el tipus de cos i la seva posició
         BodyDef defCos = new BodyDef();
@@ -176,7 +176,7 @@ public class Personatge {
 
     private void crearProtagonista(float position1, float position2, int frame_cols, int frame_rows) {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
-        spriteAnimat = new AnimatedSprite(getSpritePersonatge(), frame_cols, frame_rows, getStoppedTexture());
+        setSpriteAnimat(new AnimatedSprite(getSpritePersonatge(), frame_cols, frame_rows, getStoppedTexture()));
 
         // Definir el tipus de cos i la seva posició
         BodyDef defCos = new BodyDef();
@@ -215,7 +215,7 @@ public class Personatge {
         setMoureDreta(false);
         setMoureEsquerra(false);
         setFerSalt(false);
-        spriteAnimat.setDirection(AnimatedSprite.Direction.STOPPED);
+        getSpriteAnimat().setDirection(AnimatedSprite.Direction.STOPPED);
     }
 
     /**
@@ -227,11 +227,11 @@ public class Personatge {
                         - getSpritePersonatge().getWidth() / FRAME_COLS / 2,
                 JocDeTrons.PIXELS_PER_METRE * getCos().getPosition().y
                         - getSpritePersonatge().getHeight() / FRAME_ROWS / 2);
-        spriteAnimat.setPosition(getSpritePersonatge().getX(), getSpritePersonatge().getY());
+        getSpriteAnimat().setPosition(getSpritePersonatge().getX(), getSpritePersonatge().getY());
     }
 
     public void dibuixar(SpriteBatch batch) {
-        spriteAnimat.draw(batch);
+        getSpriteAnimat().draw(batch);
     }
 
     /**
@@ -245,13 +245,12 @@ public class Personatge {
      */
     public void moure() {
 
-
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
         if (moureDreta) {
             getCos().applyLinearImpulse(new Vector2(0.1f, 0.0f),
                     getCos().getWorldCenter(), true);
-            spriteAnimat.setDirection(AnimatedSprite.Direction.RIGHT);
+            getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
 
             if (!isPersonatgeCaraDreta()) {
                 getSpritePersonatge().flip(true, false);
@@ -260,7 +259,7 @@ public class Personatge {
         } else if (moureEsquerra) {
             getCos().applyLinearImpulse(new Vector2(-0.1f, 0.0f),
                     getCos().getWorldCenter(), true);
-            spriteAnimat.setDirection(AnimatedSprite.Direction.LEFT);
+            getSpriteAnimat().setDirection(AnimatedSprite.Direction.LEFT);
             if (isPersonatgeCaraDreta()) {
                 getSpritePersonatge().flip(true, false);
             }
@@ -393,5 +392,9 @@ public class Personatge {
 
     public void setAlive(boolean isAlive) {
         this.isAlive = isAlive;
+    }
+
+    public void setSpriteAnimat(AnimatedSprite spriteAnimat) {
+        this.spriteAnimat = spriteAnimat;
     }
 }

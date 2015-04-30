@@ -22,33 +22,49 @@ public class Bird extends Personatge {
 
     public Bird(World world) {
         super(world);
+        setPersonatgeCaraDreta(true);
         ammo = new Crap(world);
     }
 
     public Bird(World world, float position, float position2) {
         super(world, position, position2);
+        setPersonatgeCaraDreta(true);
         ammo = new Crap(world,position,position2);
     }
 
     public Bird(World world, String animatedImage, String stoppedImage) {
         super(world, animatedImage, stoppedImage);
+        setPersonatgeCaraDreta(true);
         ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif");
     }
 
     public Bird(World world, String animatedImage, String stoppedImage, float position, float position2) {
         super(world, animatedImage, stoppedImage, position, position2);
+        setPersonatgeCaraDreta(true);
         ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",position,position2);
     }
 
     public Bird(World world, String animatedImage, String stoppedImage, float position, float position2, int frame_cols, int frame_rows, String tag) {
         super(world, animatedImage, stoppedImage, position, position2, frame_cols, frame_rows);
         getCos().setUserData(tag);
+        setPersonatgeCaraDreta(true);
         ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",position,position2);
     }
 
     public void inicialitzarMoviments() {
-        setMoureDreta(true);
-        setMoureEsquerra(false);
+
+        if(getCos().getPosition().x > 10){
+            Gdx.app.log("mou esquerra","puto");
+            setMoureDreta(false);
+            setMoureEsquerra(true);
+        } else if(getCos().getPosition().x <= 2){
+            setMoureDreta(true);
+            setMoureEsquerra(false);
+            Gdx.app.log("mou dreta","puto");
+        }
+
+        //setMoureDreta(true);
+        //setMoureEsquerra(false);
         setFerSalt(false);
         //super.getSpriteAnimat().setDirection(AnimatedSprite.Direction.STOPPED);
     }
@@ -66,50 +82,30 @@ public class Bird extends Personatge {
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
 
-        if (getCos().getPosition().y < 6.0f) {
-            getCos().applyLinearImpulse(new Vector2(0.0f, 2.0f),
+
+        if (getCos().getPosition().y <= 6.0f && yVelocity < 2.0f) {
+            getCos().applyLinearImpulse(new Vector2(0.0f, 1.0f),
                     getCos().getWorldCenter(), true);
+            //getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
         }
 
-
-        if (isMoureDreta() && xVelocity<1.0f) {
-            getCos().applyLinearImpulse(new Vector2(0.4f, 0.0f),
+        if (isMoureDreta() && xVelocity < 1.0f /*&& getCos().getPosition().y < 9.0f*/) {
+            getCos().applyLinearImpulse(new Vector2(0.1f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
 
-
+            if (!isPersonatgeCaraDreta()) {
+                getSpritePersonatge().flip(true, false);
+            }
             setPersonatgeCaraDreta(true);
-        } else if (isMoureEsquerra() && xVelocity<2.2f) {
-            getCos().applyLinearImpulse(new Vector2(-0.4f, 0.0f),
+        } else if (isMoureEsquerra() && xVelocity > -1.0f) {
+            getCos().applyLinearImpulse(new Vector2(-0.1f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.LEFT);
             if (isPersonatgeCaraDreta()) {
                 getSpritePersonatge().flip(true, false);
             }
             setPersonatgeCaraDreta(false);
-        }
-
-
-
-        if (isFerSalt() && isMoureDreta()&&Math.abs(getCos().getLinearVelocity().y) < 1e-9 && yVelocity<5f) {
-            getCos().applyLinearImpulse(new Vector2(2.0f, 5.0f),
-                    getCos().getWorldCenter(), true);
-            setFerSalt(false);
-            long id = getSoSalt().play();
-        }
-
-        if (isFerSalt() && isMoureEsquerra()&&Math.abs(getCos().getLinearVelocity().y) < 1e-9 && yVelocity<5f) {
-            getCos().applyLinearImpulse(new Vector2(-2.0f, 5.0f),
-                    getCos().getWorldCenter(), true);
-            setFerSalt(false);
-            long id = getSoSalt().play();
-        }
-
-        if (isFerSalt() && Math.abs(getCos().getLinearVelocity().y) < 1e-9 && yVelocity<5f) {
-            getCos().applyLinearImpulse(new Vector2(0.0f, 5.0f),
-                    getCos().getWorldCenter(), true);
-            setFerSalt(false);
-            long id = getSoSalt().play();
         }
 
     }

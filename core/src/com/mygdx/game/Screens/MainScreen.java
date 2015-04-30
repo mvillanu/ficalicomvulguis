@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.Bird;
+import com.mygdx.game.Crap;
 import com.mygdx.game.Enemy;
 import com.mygdx.game.GestorContactes;
 import com.mygdx.game.ImagesPath;
@@ -47,6 +48,7 @@ public class MainScreen extends AbstractScreen {
 	// objecte que gestiona el protagonista del joc
 	// ---->private PersonatgeBackup personatge;
     private Personatge personatge;
+    private Crap crap;
     private Bird bird;
     private Enemy enemic;
     private Tornado tornado;
@@ -84,6 +86,7 @@ public class MainScreen extends AbstractScreen {
     private Label title;
     private Table table = new Table();
     private GestorContactes gestorContactes;
+    private ArrayList<Crap> crapList;
     private ArrayList<Personatge> enemyList;
     private ArrayList<ImagesPath> imagesPath;
 
@@ -112,8 +115,8 @@ public class MainScreen extends AbstractScreen {
         lastTime=0;
         gestorContactes=new GestorContactes();
         // --- si es volen destruir objectes, descomentar ---
-		//bodyDestroyList= new ArrayList<Body>();
-		//world.setContactListener(new GestorContactes(bodyDestroyList));
+		ArrayList<Body> bodyDestroyList= new ArrayList<Body>();
+		world.setContactListener(new GestorContactes(bodyDestroyList));
 		world.setContactListener(gestorContactes);
 
 		// crear el personatge
@@ -121,7 +124,11 @@ public class MainScreen extends AbstractScreen {
         bird = new Bird(world,"imatges/angrybirdSprite_sensefons.png",null,1.0f, 8.0f, 5,3, "bird");
         enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Enemy.ENEMIC1);
         tornado= new Tornado(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Tornado.TORNADO);
+
+
         enemyList=new ArrayList<Personatge>();
+        crapList= new ArrayList<Crap>();
+        ImagesPath crapPath = new ImagesPath("imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif");
         imagesPath= new ArrayList<ImagesPath>();
         imagesPath.add(new ImagesPath("imatges/puma_s.png","imatges/pumaSprite.png"));
         imagesPath.add(new ImagesPath("imatges/warrior.png","imatges/vestruç.png"));
@@ -257,7 +264,7 @@ public class MainScreen extends AbstractScreen {
 	private void carregarMapa() {
 		tiledMapHelper = new TiledMapHelper();
 		tiledMapHelper.setPackerDirectory("world/level1/packer");
-		tiledMapHelper.loadMap("world/level1/packer/level.tmx");
+		tiledMapHelper.loadMap("world/level1/packer/theFinalMap.tmx");
 		tiledMapHelper.prepareCamera(joc.getScreenWidth(),
 				joc.getScreenHeight());
 	}
@@ -310,6 +317,8 @@ public class MainScreen extends AbstractScreen {
         bird.moure();
         bird.updatePosition();
         moveEnemies();
+        moveCraps();
+
 
         String enemyJump=null;
         if ((enemyJump=gestorContactes.enemyMustJump())!=null){
@@ -356,6 +365,7 @@ public class MainScreen extends AbstractScreen {
             tornado.dibuixar(batch);
             //checkCrapList();
         printEnemies();
+        printCraps();
 
 	    	// finalitzar el lot: a partir d'aquest moment es dibuixa tot el que
 		    // s'ha indicat entre begin i end
@@ -364,6 +374,9 @@ public class MainScreen extends AbstractScreen {
         // dibuixar els controls de pantalla
         stage.act();
         stage.draw();
+        Gdx.app.log("bird position:",String.valueOf(bird.getCos().getPosition().x));
+
+
 
         //debugRenderer.render(world, tiledMapHelper.getCamera().combined.scale(
 		//		JocDeTrons.PIXELS_PER_METRE, JocDeTrons.PIXELS_PER_METRE,
@@ -373,6 +386,20 @@ public class MainScreen extends AbstractScreen {
     private long lastTime;
 
 
+
+    private void printCraps(){
+        for(Crap x : crapList) {
+            x.dibuixar(batch);
+        }
+    }
+
+    private void moveCraps(){
+        for(Crap x : crapList) {
+            x.inicialitzarMoviments();
+            x.moure();
+            x.updatePosition();
+        }
+    }
 
     private void printEnemies(){
         for(Personatge x : enemyList) {
@@ -389,10 +416,11 @@ public class MainScreen extends AbstractScreen {
         }
     }
     private void spawnEnemy(){
-        Gdx.app.log("time", String.valueOf(getSysTime()-lastTime));
+        //Gdx.app.log("time", String.valueOf(getSysTime()-lastTime));
         Collections.shuffle(imagesPath);
         if(getSysTime()-lastTime>5){
             enemyList.add(new Enemy(world,imagesPath.get(0).getAnimatedImage(),imagesPath.get(0).getStoppedImage(),tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, Enemy.ENEMIC1));
+            crapList.add(new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",bird.getCos().getPosition().x-0.5f,bird.getCos().getPosition().y-0.5f,Crap.CRAP));
             lastTime=getSysTime();
         }
     }
@@ -412,7 +440,8 @@ public class MainScreen extends AbstractScreen {
         if(!gestorContactes.getBodyDestroyList().isEmpty()){
             for(int i = gestorContactes.getBodyDestroyList().size()-1; i >=0; i-- ) {
                 Body cos = gestorContactes.getBodyDestroyList().get(i);
-                if(cos.equals("Personatge")){
+                if(cos.equals(Crap.CRAP)){
+
                     personatge.setAlive(false);
                 }
                 world.destroyBody(cos);
