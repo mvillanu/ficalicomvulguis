@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="223" height="15" tilewidth="32" tileheight="32" nextobjectid="44">
+ <tileset firstgid="1" name="tilea4" tilewidth="32" tileheight="32" margin="20">
+  <image source="tilea4.png" width="512" height="480"/>
+ </tileset>
+ <imagelayer name="SecondbackgroundImageLayer" x="2749" y="-289">
+  <image source="forcemocha-caves2-1920x1200.jpg"/>
+ </imagelayer>
+ <imagelayer name="ThirdbackgroundImageLayer" x="5244" y="-288">
+  <image source="red-giant-sunset.jpg"/>
+ </imagelayer>
+ <imagelayer name="FirstbackgroundImageLayer" x="-15" y="-288">
+  <image source="Cloudy-sky.jpg"/>
+ </imagelayer>
+ <layer name="Tile Layer 1" width="223" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztmcFqwzAMhv2iO+/Scy5lL7CXqHfrqd0LjDHoeeyR1oADQiiO5NiRbPTBDyF1Y9X1F6U0BKc292c+QRweMfi6Oftw98qIwdfN2Ye7V0YMvm7WeE3pBXevjBjGX7cXkF5w98YnPvMBMiInEKvgXteTezGMv4dacAfH+J41yj1s7ndvKb3Qm3sLo+yZI8i5NwpW3cv9rtNwbwKREMHxqHuoBXvcaz2+Flbdy+F9b3yO6Hva3wd078tIcr1lUqinlKVPfh+Ua4qU1nXVqKMlPwZyQ7mArJ3HyV3jAs7dNt5D+Tcx5sdzbM2Dx1KhkDyD/h6YHJSX2jVxa6kJ7Hd/RkLtuy23JOG+f5kL7utJMA81H/Yde0p9xuWYy5qPWu7l+uBZqaaZRwqm1D3OsyM1Rts37N5WT5H2QU7fWxuHkc7DqXFtDDy/Fy33KM4p74Zq4qxT7f9ItV1r4R7e83hc7nV8PYzEvdwzKK6H6ncwe7Hi3uzc0gut1MRdp9pou8Z55tzyI9djJNejgim9Due3n6QOKVb2+TW4ezPanlH5B27SFwc=
+  </data>
+ </layer>
+ <objectgroup name="Box2D">
+  <object id="1" type="fixture" x="0" y="288" width="1118" height="192">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="3" type="fixture" x="1120" y="476">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+   <polyline points="0,0 32,0 32,-94 60,-94 60,-110 30,-110 30,-142 4,-142 4,-4"/>
+  </object>
+  <object id="4" type="fixture" x="1342" y="296">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+   <polyline points="0,0 -28,0 -28,28 -58,28 -58,56 -92,58 -92,84 -64,84 -64,180 34,180 34,-2 2,0"/>
+  </object>
+  <object id="5" type="fixture" x="1122" y="224" width="60" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="6" type="fixture" x="1218" y="160" width="58" height="28">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="7" type="fixture" x="1314" y="96">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+   <polyline points="0,0 58,0 60,188 30,188 30,32 0,32 0,0"/>
+  </object>
+  <object id="9" type="fixture" x="1380" y="290" width="858" height="186">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="12" type="fixture" x="2722" y="0" width="122" height="186">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="14" type="fixture" x="2274" y="224" width="92" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="15" type="fixture" x="2400" y="320" width="96" height="28">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="16" type="fixture" x="2560" y="354" width="92" height="26">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="17" type="fixture" x="2690" y="288" width="60" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="18" type="fixture" x="2752" y="288" width="860" height="188">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="19" type="fixture" x="3612" y="290" width="36" height="32">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="20" type="fixture" x="3712" y="352" width="62" height="28">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="21" type="fixture" x="3840" y="318" width="32" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="22" type="fixture" x="4034" y="294" width="764" height="176">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="23" type="fixture" x="4412" y="136" width="6">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="24" type="fixture" x="4032" y="320">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+   <polyline points="0,0 -32,0 -32,30 -94,30 -96,60 -160,62 -162,92 -192,94 -192,152 2,148 2,2"/>
+  </object>
+  <object id="25" type="fixture" x="5120" y="288" width="220" height="188">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="27" type="fixture" x="4928" y="350" width="62" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="30" type="fixture" x="5340" y="382" width="100" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="31" type="fixture" x="5440" y="156" width="32" height="32">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="32" type="fixture" x="5566" y="350" width="34" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="33" type="fixture" x="5694" y="222" width="32" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="36" type="fixture" x="5856" y="350" width="32" height="32">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="37" type="fixture" x="5952" y="318" width="30" height="32">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="38" type="fixture" x="6014" y="254" width="32" height="30">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="39" type="fixture" x="6080" y="224" width="30" height="28">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="40" type="fixture" x="6080" y="294" width="1086" height="184">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+  </object>
+  <object id="41" type="fixture" x="6078" y="320">
+   <properties>
+    <property name="body" value="environment"/>
+    <property name="material" value="ground"/>
+   </properties>
+   <polyline points="0,0 -30,0 -30,30 -60,30 -60,64 -92,66 -90,124 -124,124 -124,158 -6,156 -2,2"/>
+  </object>
+  <object id="42" type="fixture" x="7132" y="288">
+   <polyline points="0,0 0,-500"/>
+  </object>
+  <object id="43" x="2" y="286">
+   <polyline points="0,0 0,-284"/>
+  </object>
+ </objectgroup>
+</map>
