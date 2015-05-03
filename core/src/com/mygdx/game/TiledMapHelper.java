@@ -36,17 +36,23 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 
 public class TiledMapHelper {
 	private FileHandle packFileDirectory;
-
 	private OrthographicCamera camera;
-
 	private TextureAtlas tileAtlas;
 	private TiledMapRenderer tileMapRenderer;
-
+	private Array<Body> screenLimits = new Array<Body>();
 	private TiledMap map;
+	private float limitCameraLeft = 1.7f;
+	private float limitCameraRight = 20.7f;
 
 	/**
 	 * Renders the part of the map that should be visible to the user.
@@ -56,6 +62,18 @@ public class TiledMapHelper {
 		tileMapRenderer.render();
 	}
 
+	public float getLimitCameraLeft(){
+		return limitCameraLeft;
+	}
+	public void setLimitCameraLeft(float limitCameraLeft){
+		this.limitCameraLeft = limitCameraLeft;
+	}
+	public float getLimitCameraRight(){
+		return limitCameraRight;
+	}
+	public void setLimitCameraRight(float limitCameraRight){
+		this.limitCameraLeft = limitCameraRight;
+	}
 	
 	public int getMapHeight() {		
 		return map.getProperties().get("height", Integer.class);
@@ -139,10 +157,15 @@ public class TiledMapHelper {
 	 */
 	public void prepareCamera(int screenWidth, int screenHeight) {
 		camera = new OrthographicCamera(screenWidth, screenHeight);
-        camera.zoom += 1.5;
-		camera.position.set(screenWidth/2, screenHeight/2, 0);
+		//camera.setToOrtho(false, 600 / getMapWidth(), 320 / getMapHeight());
+        camera.zoom += 0.5;
+		camera.position.set(600, screenHeight, 0);
 
 	}
+
+    public void setScreenLimit(OrthographicCamera camera){
+        //camera.position.x;
+    }
 
 	/**
 	 * Returns the camera object created for viewing the loaded map.
@@ -155,6 +178,66 @@ public class TiledMapHelper {
 					"getCamera() called out of sequence");
 		}
 		return camera;
+	}
+
+	public void moveCameraLimits(float a, float b){
+		limitCameraLeft = a;
+		limitCameraRight = b;
+	}
+
+	public void createCameraLimit(World world, float a){
+
+		limitCameraLeft = a;
+		limitCameraRight = limitCameraLeft+8.8f;
+
+		if(screenLimits.size != 0) {
+			for (Body screen : screenLimits) {
+				world.destroyBody(screen);
+				screen.setUserData(null);
+			}
+			screenLimits.clear();
+		}
+
+		//Colisions limits esquerra camera
+		BodyDef bodyDef2 = new BodyDef();
+		bodyDef2.type = BodyDef.BodyType.StaticBody;
+		bodyDef2.position.set(0,0);
+		FixtureDef fixtureDef2 = new FixtureDef();
+		EdgeShape edgeShape = new EdgeShape();
+		edgeShape.set(limitCameraLeft,0,limitCameraLeft,camera.position.y);
+
+		/*Gdx.app.log("ViewPort height", String.valueOf(camera.viewportHeight));
+		Gdx.app.log("ViewPort width",String.valueOf(camera.viewportWidth));
+		Gdx.app.log("Position x",String.valueOf(camera.position.x));
+		Gdx.app.log("Position y", String.valueOf(camera.position.y));*/
+
+		fixtureDef2.shape = edgeShape;
+		fixtureDef2.filter.categoryBits = ColisionsGroups.MAP_ENTITY;
+		fixtureDef2.filter.maskBits = ColisionsGroups.HERO_ENTITY | ColisionsGroups.ENEMIC_ENTITY;
+		Body bodyEdgeScreenLeft = world.createBody(bodyDef2);
+		bodyEdgeScreenLeft.createFixture(fixtureDef2);
+		bodyEdgeScreenLeft.setUserData("ScreenLeft");
+		screenLimits.add(bodyEdgeScreenLeft);
+		fixtureDef2.shape = null;
+		edgeShape.dispose();
+
+		//Colisions limit dret camera
+		BodyDef bodyDef4 = new BodyDef();
+		bodyDef4.type = BodyDef.BodyType.StaticBody;
+		bodyDef4.position.set(0,0);
+		FixtureDef fixtureDef4 = new FixtureDef();
+		EdgeShape edgeShapeRight = new EdgeShape();
+		edgeShapeRight.set(limitCameraRight,0,limitCameraRight,camera.position.y);
+		fixtureDef4.shape = edgeShapeRight;
+		fixtureDef4.filter.categoryBits = ColisionsGroups.MAP_ENTITY;
+		fixtureDef4.filter.maskBits = ColisionsGroups.HERO_ENTITY | ColisionsGroups.ENEMIC_ENTITY;;
+		Body bodyEdgeScreenRight = world.createBody(bodyDef4);
+		bodyEdgeScreenRight.createFixture(fixtureDef4);
+		bodyEdgeScreenRight.setUserData("ScreenRight");
+		screenLimits.add(bodyEdgeScreenRight);
+		fixtureDef4.shape = null;
+		edgeShapeRight.dispose();
+
 	}
 
 }

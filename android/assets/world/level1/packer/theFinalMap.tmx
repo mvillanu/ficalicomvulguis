@@ -206,8 +206,5 @@
   <object id="42" name="endLimit" type="fixture" x="7132" y="288">
    <polyline points="0,0 0,-500"/>
   </object>
-  <object id="43" name="startLimit" type="fixture" x="2" y="286">
-   <polyline points="0,0 0,-284"/>
-  </object>
  </objectgroup>
 </map>

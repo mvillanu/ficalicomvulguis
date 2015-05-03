@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -36,7 +38,6 @@ import java.util.Collections;
 public class MainScreen extends AbstractScreen {
 
 
-    public final static short WORLD_ENTITY = 2;
     /**
      * Estils
      */
@@ -124,8 +125,8 @@ public class MainScreen extends AbstractScreen {
 		// crear el personatge
         personatge = new Personatge(world,Personatge.HERO);
         bird = new Bird(world,"imatges/angrybirdSprite_sensefons.png",null,1.0f, 8.0f, 5,3, Bird.BIRD);
-        enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Enemy.ENEMIC1);
-        tornado= new Tornado(world,"imatges/epictornadogran.png","imatges/qtornado.png",2.0f, 5.0f, 5, 3, Tornado.TORNADO);
+        //enemic = new Enemy(world,"imatges/pumaSprite.png","imatges/puma_s.png",1.0f, 3.0f, Enemy.ENEMIC1);
+        tornado= new Tornado(world,"imatges/epictornadogran.png","imatges/qtornado.png",-1.0f, 4.5f, 5, 3, Tornado.TORNADO);
 
 
         enemyList=new ArrayList<Enemy>();
@@ -133,42 +134,53 @@ public class MainScreen extends AbstractScreen {
         ImagesPath crapPath = new ImagesPath("imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif");
         imagesPath= new ArrayList<ImagesPath>();
         imagesPath.add(new ImagesPath(/*"imatges/puma_s.png"*/null,"imatges/pumaSprite.png"));
-        imagesPath.add(new ImagesPath(/*"imatges/avestru.png"*/null,"imatges/vestruç.png"));
+        imagesPath.add(new ImagesPath(/*"imatges/avestru.png"*/null,"imatges/vestrus.png"));
         imagesPath.add(new ImagesPath(/*"imatges/shark.png"*/null,"imatges/sharkftw.png"));
 
         // objecte que permet debugar les col·lisions
-		//debugRenderer = new Box2DDebugRenderer();
+		debugRenderer = new Box2DDebugRenderer();
 	}
 
     /**
      * Moure la càmera en funció de la posició del personatge
      */
 	private void moureCamera() {
-		// Posicionem la camera centran-la on hi hagi l'sprite del protagonista
-		tiledMapHelper.getCamera().position.x = JocDeTrons.PIXELS_PER_METRE
-				* personatge.getPositionBody().x;
 
-		// Assegurar que la camera nomes mostra el mapa i res mes
-		if (tiledMapHelper.getCamera().position.x <  joc.getScreenWidth() / 2) {
-			tiledMapHelper.getCamera().position.x =  joc.getScreenWidth()/ 2;
-		}
-		if (tiledMapHelper.getCamera().position.x >= tiledMapHelper.getWidth()
-				-  joc.getScreenWidth()/ 2) {
-			tiledMapHelper.getCamera().position.x = tiledMapHelper.getWidth()
-					- joc.getScreenWidth()/ 2;
-		}
+        // Posicionem la camera centran-la on hi hagi l'sprite del protagonista
+        tiledMapHelper.getCamera().position.x = JocDeTrons.PIXELS_PER_METRE
+                * tornado.getPositionBody().x+400;
 
-		if (tiledMapHelper.getCamera().position.y < joc.getScreenHeight() / 2) {
-			tiledMapHelper.getCamera().position.y = joc.getScreenHeight()/ 2;
-		}
-		if (tiledMapHelper.getCamera().position.y >= tiledMapHelper.getHeight()
-				- joc.getScreenHeight() / 2) {
-			tiledMapHelper.getCamera().position.y = tiledMapHelper.getHeight()
-					- joc.getScreenHeight() / 2;
-		}
+        //tiledMapHelper.getCamera().position.x = 600;
 
-		// actualitzar els nous valors de la càmera
-		tiledMapHelper.getCamera().update();
+            // Assegurar que la camera nomes mostra el mapa i res mes
+            Gdx.app.log("ScreenWidth",String.valueOf(joc.getScreenWidth()));
+            /*if (tiledMapHelper.getCamera().position.x < joc.getScreenWidth() / 2) {
+                tiledMapHelper.getCamera().position.x = joc.getScreenWidth()/ 2;
+            }
+            if (tiledMapHelper.getCamera().position.x >= tiledMapHelper.getWidth()
+                    -  joc.getScreenWidth()/ 2) {
+                tiledMapHelper.getCamera().position.x = tiledMapHelper.getWidth()
+                        - joc.getScreenWidth()/ 2;
+            }
+
+            if (tiledMapHelper.getCamera().position.y < joc.getScreenHeight() / 2) {
+                tiledMapHelper.getCamera().position.y = joc.getScreenHeight()/ 2;
+            }
+            if (tiledMapHelper.getCamera().position.y >= tiledMapHelper.getHeight()
+                    - joc.getScreenHeight() / 2) {
+                tiledMapHelper.getCamera().position.y = tiledMapHelper.getHeight()
+                        - joc.getScreenHeight() / 2;
+            }*/
+
+        if (tiledMapHelper.getCamera().position.x < 600){
+            tiledMapHelper.getCamera().position.x = 600;
+        }
+
+            // actualitzar els nous valors de la càmera
+            tiledMapHelper.getCamera().update();
+
+
+
 	}
 /*
     @Override
@@ -268,7 +280,8 @@ public class MainScreen extends AbstractScreen {
 		tiledMapHelper.setPackerDirectory("world/level1/packer");
 		tiledMapHelper.loadMap("world/level1/packer/theFinalMap.tmx");
 		tiledMapHelper.prepareCamera(joc.getScreenWidth(),
-				joc.getScreenHeight());
+                joc.getScreenHeight());
+
 	}
 
 	/**
@@ -310,16 +323,28 @@ public class MainScreen extends AbstractScreen {
         MOU L'ENEMIC SEGONS LA POSICIÓ DEL JUGADOR
          */
 
-        checkMovimentEnemic(enemic);
+        //checkMovimentEnemic(enemic);
+
+        Gdx.app.log("ViewPort height", String.valueOf(tiledMapHelper.getCamera().viewportHeight));
+        Gdx.app.log("ViewPort width",String.valueOf(tiledMapHelper.getCamera().viewportWidth));
+        Gdx.app.log("Position x",String.valueOf(tiledMapHelper.getCamera().position.x));
+        Gdx.app.log("Position y",String.valueOf(tiledMapHelper.getCamera().position.y));
 
         tornado.moure();
-        tornado.updatePosition();
+        tornado.updatePosition(delta);
 	     personatge.moure();
-         personatge.updatePosition();
+        if(!tiledMapHelper.getCamera().frustum.pointInFrustum(personatge.getSpritePersonatge().getX(),personatge.getSpritePersonatge().getY(),0)){
+            Gdx.app.log("Player inside screen: ","blah");
+            //final Rectangle screenBounds = new Rectangle(0, 0, tiledMapHelper.getCamera().position.x, tiledMapHelper.getCamera().position.y);
+            //personatge.getSpritePersonatge().setX(screenBounds.x / 2);
+            //personatge.getSpritePersonatge().setPosition((screenBounds.x / 2)/2, (screenBounds.y / 2) / 2);
+            //onlyInsideCamera();
+        };
+         personatge.updatePosition(delta);
         bird.moure();
-        bird.updatePosition();
-        moveEnemies();
-        moveCraps();
+        bird.updatePosition(delta);
+        moveEnemies(delta);
+        moveCraps(delta);
 
 
         String enemyJump=null;
@@ -341,20 +366,18 @@ public class MainScreen extends AbstractScreen {
          * la velocitat i per tractar la posició. Un valor alt és més
          * precís però més lent.
          */
-		world.step(Gdx.app.getGraphics().getDeltaTime(), 6, 2);
+        world.step(Gdx.app.getGraphics().getDeltaTime(), 6, 2);
 
 
-
-
-
-
-		// Esborrar la pantalla
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // Esborrar la pantalla
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// Color de fons marro
-		Gdx.gl.glClearColor(185f / 255f, 122f / 255f, 87f / 255f, 0);
+        Gdx.gl.glClearColor(185f / 255f, 122f / 255f, 87f / 255f, 0);
 
 		moureCamera();
+        tiledMapHelper.createCameraLimit(world,tornado.getCos().getPosition().x+0.7f);
+
 		// pintar el mapa
 		tiledMapHelper.render();
 		// Preparar l'objecte SpriteBatch per dibuixar la resta d'elements
@@ -376,13 +399,14 @@ public class MainScreen extends AbstractScreen {
         // dibuixar els controls de pantalla
         stage.act();
         stage.draw();
-        Gdx.app.log("Tornado position:",String.valueOf(tornado.getCos().getPosition().x));
-        Gdx.app.log("Tornado position:",String.valueOf(tornado.getCos().getPosition().y));
+        Gdx.app.log("Tornado position:", String.valueOf(tornado.getCos().getPosition().x));
+        Gdx.app.log("Hero position:",String.valueOf(personatge.getCos().getPosition().x));
 
 
-        //debugRenderer.render(world, tiledMapHelper.getCamera().combined.scale(
-		//		JocDeTrons.PIXELS_PER_METRE, JocDeTrons.PIXELS_PER_METRE,
-		//		JocDeTrons.PIXELS_PER_METRE));
+
+        debugRenderer.render(world, tiledMapHelper.getCamera().combined.scale(
+				JocDeTrons.PIXELS_PER_METRE, JocDeTrons.PIXELS_PER_METRE,
+				JocDeTrons.PIXELS_PER_METRE));
 	}
 
     private long lastTime;
@@ -395,11 +419,11 @@ public class MainScreen extends AbstractScreen {
         }
     }
 
-    private void moveCraps(){
+    private void moveCraps(float delta){
         for(Crap x : crapList) {
             x.inicialitzarMoviments();
             x.moure();
-            x.updatePosition();
+            x.updatePosition(delta);
         }
     }
 
@@ -408,13 +432,13 @@ public class MainScreen extends AbstractScreen {
             x.dibuixar(batch);
         }
     }
-    private void moveEnemies(){
+    private void moveEnemies(float delta){
         for(Enemy x : enemyList){
             x.inicialitzarMoviments();
             checkMovimentEnemic(x);
             //x.setMoureDreta(true);
             x.moure();
-            x.updatePosition();
+            x.updatePosition(delta);
         }
     }
     private void spawnEnemy(){
@@ -422,12 +446,12 @@ public class MainScreen extends AbstractScreen {
         Collections.shuffle(imagesPath);
         int frame_rows = 2, frame_cols = 6;
 
-        if(getSysTime()-lastTime>10 &&enemyList.size() < 1){
+        if(getSysTime()-lastTime>5 &&enemyList.size() < 3){
 
             if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/pumaSprite.png") == 0){
                 frame_cols = 5;
                 frame_rows = 2;
-            } else if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/vestruç.png") == 0){
+            } else if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/vestrus.png") == 0){
                 frame_cols = 7;
                 frame_rows = 4;
             } else if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/sharkftw.png") == 0){
@@ -446,9 +470,6 @@ public class MainScreen extends AbstractScreen {
 
         return System.currentTimeMillis()/1000;
     }
-
-
-
 
     private void eliminarCossos(){
         /*

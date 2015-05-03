@@ -2,7 +2,10 @@ package com.mygdx.game;
 
 import java.util.Iterator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -20,6 +23,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -55,6 +59,8 @@ public class MapBodyManager {
 	private float units;
 	private Array<Body> bodies = new Array<Body>();
 	private ObjectMap<String, FixtureDef> materials = new ObjectMap<String, FixtureDef>();
+
+
 
 	/**
 	 * @param world
@@ -151,7 +157,7 @@ public class MapBodyManager {
 
 			fixtureDef.shape = shape;
 			fixtureDef.filter.categoryBits = CATEGORIA_ESCENA;// Env.game.getCategoryBitsManager().getCategoryBits("level");
-            fixtureDef.filter.maskBits = -1;
+            fixtureDef.filter.maskBits = ColisionsGroups.HERO_ENTITY | ColisionsGroups.ENEMIC_ENTITY;
 			Body body = world.createBody(bodyDef);
 			body.createFixture(fixtureDef);
 			body.setUserData(object.getName());
@@ -159,6 +165,25 @@ public class MapBodyManager {
 
 			fixtureDef.shape = null;
 			shape.dispose();
+			//createCameraLimit(new OrthographicCamera());
+
+			//Colisions limit superior camera
+			BodyDef bodyDef3 = new BodyDef();
+			bodyDef3.type = BodyDef.BodyType.StaticBody;
+			bodyDef3.position.set(0,0);
+			FixtureDef fixtureDef3 = new FixtureDef();
+			EdgeShape edgeShapeTop = new EdgeShape();
+			edgeShapeTop.set(0,6.2f,79f,6.2f);
+			fixtureDef3.shape = edgeShapeTop;
+			fixtureDef3.filter.categoryBits = ColisionsGroups.MAP_ENTITY;
+			fixtureDef3.filter.maskBits = ColisionsGroups.HERO_ENTITY | ColisionsGroups.ENEMIC_ENTITY;
+			Body bodyEdgeScreenTop = world.createBody(bodyDef3);
+			bodyEdgeScreenTop.setUserData("ScreenTop");
+			bodyEdgeScreenTop.createFixture(fixtureDef3);
+			bodies.add(bodyEdgeScreenTop);
+			fixtureDef3.shape = null;
+			edgeShapeTop.dispose();
+
 		}
 	}
 
@@ -262,4 +287,7 @@ public class MapBodyManager {
 		chain.createChain(worldVertices);
 		return chain;
 	}
+
+
+
 }

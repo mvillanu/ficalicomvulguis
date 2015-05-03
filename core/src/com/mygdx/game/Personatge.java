@@ -1,10 +1,12 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,6 +21,8 @@ public class Personatge {
     public static final String HERO = "hero";
     public static final int FRAME_COLS = 9;
     public static final int FRAME_ROWS = 2;
+    private static final float SPEED = 10f; // 10 pixels per second
+    private static final float SPEED_SLOW = 1f; // 1 pixel per second
     /**
      * Detectar el moviment
      */
@@ -115,7 +119,7 @@ public class Personatge {
     private void setFilterColisions(FixtureDef propietats){
         if(getCos().getUserData().toString().equals(Enemy.ENEMIC1) || getCos().getUserData().toString().equals(Enemy.ENEMIC2)){
             propietats.filter.categoryBits = ColisionsGroups.ENEMIC_ENTITY;
-            propietats.filter.maskBits = ColisionsGroups.MAP_ENTITY | ColisionsGroups.HERO_ENTITY;
+            propietats.filter.maskBits = ColisionsGroups.HERO_ENTITY | ColisionsGroups.MAP_ENTITY;
 
         } else if (getCos().getUserData().toString().equals(Tornado.TORNADO)){
             propietats.filter.categoryBits = ColisionsGroups.TORNADO_ENTITY;
@@ -127,6 +131,9 @@ public class Personatge {
         } else if(getCos().getUserData().toString().equals(HERO)){
             propietats.filter.categoryBits = ColisionsGroups.HERO_ENTITY;
             propietats.filter.maskBits = ColisionsGroups.MAP_ENTITY | ColisionsGroups.ENEMIC_ENTITY;
+        } else if(getCos().getUserData().toString().equals((Crap.CRAP))){
+            propietats.filter.categoryBits = ColisionsGroups.CRAP_ENTITY;
+            propietats.filter.maskBits = ColisionsGroups.MAP_ENTITY | ColisionsGroups.ENEMIC_ENTITY;
         }
         String tipus = "nothing for me";
         if(propietats.filter.categoryBits == ColisionsGroups.BIRD_ENTITY){
@@ -137,6 +144,8 @@ public class Personatge {
             tipus = "Tornado";
         } else if(propietats.filter.categoryBits == ColisionsGroups.HERO_ENTITY) {
             tipus = "Hero";
+        } else if(propietats.filter.categoryBits == ColisionsGroups.CRAP_ENTITY){
+            tipus = "crap";
         }
         Gdx.app.log("GRUP: ",tipus);
         Gdx.app.log("GRUP: ",getCos().getUserData().toString());
@@ -262,13 +271,14 @@ public class Personatge {
     /**
      * Actualitza la posició de l'sprite
      */
-    public void updatePosition() {
+    public void updatePosition(float dt) {
         getSpritePersonatge().setPosition(
                 JocDeTrons.PIXELS_PER_METRE * getCos().getPosition().x
                         - getSpritePersonatge().getWidth() / FRAME_COLS / 2,
                 JocDeTrons.PIXELS_PER_METRE * getCos().getPosition().y
                         - getSpritePersonatge().getHeight() / FRAME_ROWS / 2);
         getSpriteAnimat().setPosition(getSpritePersonatge().getX(), getSpritePersonatge().getY());
+
     }
 
     public void dibuixar(SpriteBatch batch) {
