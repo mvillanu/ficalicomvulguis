@@ -190,12 +190,12 @@ public class TiledMapHelper {
 		limitCameraLeft = a;
 		limitCameraRight = limitCameraLeft+8.8f;
 
-		if(screenLimits.size != 0) {
-			for (Body screen : screenLimits) {
+		if(getScreenLimits().size != 0) {
+			for (Body screen : getScreenLimits()) {
 				world.destroyBody(screen);
 				screen.setUserData(null);
 			}
-			screenLimits.clear();
+			getScreenLimits().clear();
 		}
 
 		//Colisions limits esquerra camera
@@ -217,7 +217,7 @@ public class TiledMapHelper {
 		Body bodyEdgeScreenLeft = world.createBody(bodyDef2);
 		bodyEdgeScreenLeft.createFixture(fixtureDef2);
 		bodyEdgeScreenLeft.setUserData("ScreenLeft");
-		screenLimits.add(bodyEdgeScreenLeft);
+		getScreenLimits().add(bodyEdgeScreenLeft);
 		fixtureDef2.shape = null;
 		edgeShape.dispose();
 
@@ -234,10 +234,17 @@ public class TiledMapHelper {
 		Body bodyEdgeScreenRight = world.createBody(bodyDef4);
 		bodyEdgeScreenRight.createFixture(fixtureDef4);
 		bodyEdgeScreenRight.setUserData("ScreenRight");
-		screenLimits.add(bodyEdgeScreenRight);
+		getScreenLimits().add(bodyEdgeScreenRight);
 		fixtureDef4.shape = null;
 		edgeShapeRight.dispose();
 
 	}
 
+	public Array<Body> getScreenLimits() {
+		return screenLimits;
+	}
+
+	public void setScreenLimits(Array<Body> screenLimits) {
+		this.screenLimits = screenLimits;
+	}
 }

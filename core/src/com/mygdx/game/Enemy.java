@@ -40,7 +40,7 @@ public class Enemy extends Personatge {
 
     @Override
     public void moure() {
-        //Gdx.app.log("Moves like jagger","hue");
+
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
 

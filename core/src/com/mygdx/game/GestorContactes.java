@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
 /**
@@ -19,6 +20,7 @@ public class GestorContactes implements ContactListener {
 	// de moment, no implementat
 	private ArrayList<Body> bodyDestroyList;
     private String enemyName;
+    private World world;
 
 	public GestorContactes() {
 		enemyName=null;
@@ -30,9 +32,8 @@ public class GestorContactes implements ContactListener {
     }
     public void resetEnemyName(){enemyName=null;}
 
-    public ArrayList<Body> getBodyDestroyList(){
-        return bodyDestroyList;
-    }
+    public ArrayList<Body> getBodyDestroyList(){return bodyDestroyList; }
+    public void setBodyDestroyList(ArrayList<Body> bodyDestroyList) {this.bodyDestroyList = bodyDestroyList;}
 	public GestorContactes(ArrayList<Body> bodyDestroyList) {
 		this.bodyDestroyList = bodyDestroyList;
 	}
@@ -49,19 +50,113 @@ public class GestorContactes implements ContactListener {
 			return;
 		}
 
-
         checkCrapContact(fixtureA,fixtureB);
 
-        if(fixtureA.getBody().getUserData().equals(Crap.CRAP)&&!fixtureB.getBody().getUserData().equals(Crap.CRAP)){
-            bodyDestroyList.add(fixtureA.getBody());
-            Gdx.app.log("Shit on the ground!","pringue");
+        /*if((fixtureA.getBody().getUserData().equals(Crap.CRAP) && fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1))
+                ||
+                fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1) || fixtureB.getBody().getUserData().equals(Crap.CRAP)) {
+            if (!bodyDestroyList.contains(fixtureA.getBody())) {
+                bodyDestroyList.add(fixtureA.getBody());
+            }
+            if (!bodyDestroyList.contains(fixtureB.getBody())) {
+                bodyDestroyList.add(fixtureB.getBody());
+            }
+        } else if(fixtureA.getBody().getUserData().equals(Crap.CRAP)){
+            if(!bodyDestroyList.contains(fixtureA.getBody())) {
+                bodyDestroyList.add(fixtureA.getBody());
+            }
+        } else if(fixtureB.getBody().getUserData().equals(Crap.CRAP)){
+            if(!bodyDestroyList.contains(fixtureB.getBody())) {
+                bodyDestroyList.add(fixtureB.getBody());
+            }
+            Gdx.app.log("Crap contact","shit");
         } else {
-            bodyDestroyList.add(fixtureB.getBody());
-            Gdx.app.log("Shit on the ground!","pringue");
+
+
+        }*/
+        if(fixtureA.getBody().getUserData().equals(Crap.CRAP)&&!fixtureB.getBody().getUserData().equals(Crap.CRAP)){
+            if(!bodyDestroyList.contains(fixtureA.getBody())) {
+                bodyDestroyList.add(fixtureA.getBody());
+                Gdx.app.log("Shit on the ground!","pringue");
+            }
+
+        } else if(fixtureB.getBody().getUserData().equals(Crap.CRAP) && !fixtureA.getBody().getUserData().equals(Crap.CRAP)) {
+            if(!bodyDestroyList.contains(fixtureB.getBody())) {
+                bodyDestroyList.add(fixtureB.getBody());
+                Gdx.app.log("Shit on the ground!","pringue");
+            }
+
         }
 
+	}
 
-        //checkEsborrar(fixtureA, fixtureB);
+
+
+
+    @Override
+	public void endContact(Contact contact) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void preSolve(Contact contact, Manifold oldManifold) {
+
+	}
+
+	@Override
+	public void postSolve(Contact contact, ContactImpulse impulse) {
+        // TODO Auto-generated method stub
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //checkCrapContact(fixtureA,fixtureB);
+
+
+
+
+    //checkEsborrar(fixtureA, fixtureB);
 
 //        chechEnemyContact(fixtureA, fixtureB);
 
@@ -79,10 +174,9 @@ public class GestorContactes implements ContactListener {
 			} else {
 				bodyDestroyList.add(fixtureB.getBody());
 			}*/
-		//}*/
+    //}*/
 
 
-	}
 
     private void chechEnemyContact(Fixture fixtureA, Fixture fixtureB) {
         if ((fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)
@@ -124,9 +218,9 @@ public class GestorContactes implements ContactListener {
                 && fixtureB.getBody().getUserData().equals(Crap.CRAP)
                 || fixtureA.getBody().getUserData().equals(Crap.CRAP)
                 && fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1)) {
-                bodyDestroyList.add(fixtureA.getBody());
+            bodyDestroyList.add(fixtureA.getBody());
             Gdx.app.log("Shit on the enemy!","pringue");
-                bodyDestroyList.add(fixtureB.getBody());
+            bodyDestroyList.add(fixtureB.getBody());
 
         }
 
@@ -143,21 +237,6 @@ public class GestorContactes implements ContactListener {
     }
 
 
-    @Override
-	public void endContact(Contact contact) {
-		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void preSolve(Contact contact, Manifold oldManifold) {
-
-	}
-
-	@Override
-	public void postSolve(Contact contact, ContactImpulse impulse) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

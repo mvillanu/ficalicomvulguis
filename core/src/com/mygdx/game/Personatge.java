@@ -318,7 +318,7 @@ public class Personatge {
         }
 
         if (ferSalt && Math.abs(getCos().getLinearVelocity().y) < 1e-9) {
-            getCos().applyLinearImpulse(new Vector2(0.0f, 5.0f),
+            getCos().applyLinearImpulse(new Vector2(0.0f, 4.0f),
                     getCos().getWorldCenter(), true);
             long id = soSalt.play();
         }

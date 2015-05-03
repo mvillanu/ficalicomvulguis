@@ -30,13 +30,13 @@ public class Bird extends Personatge {
         //ammo = new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",position,position2);
     }
 
-    public void inicialitzarMoviments() {
+    public void inicialitzarMoviments(Personatge personatge) {
 
-        if(getCos().getPosition().x > 30){
+        if(getCos().getPosition().x > personatge.getCos().getPosition().x){
             //Gdx.app.log("mou esquerra","puto");
             setMoureDreta(false);
             setMoureEsquerra(true);
-        } else if(getCos().getPosition().x <= 2){
+        } else if(getCos().getPosition().x <= personatge.getCos().getPosition().x){
             setMoureDreta(true);
             setMoureEsquerra(false);
             //Gdx.app.log("mou dreta","puto");
