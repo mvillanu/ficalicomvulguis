@@ -53,7 +53,7 @@ public class MainScreen extends AbstractScreen {
     private Personatge personatge;
     private Crap crap;
     private Bird bird;
-    private Enemy enemic;
+    //private Enemy enemic;
     private Tornado tornado;
 
 
@@ -97,7 +97,7 @@ public class MainScreen extends AbstractScreen {
      * per indicar quins cossos s'han de destruir
      * @param joc
      */
-    //private ArrayList<Body> bodyDestroyList;
+    private ArrayList<Body> bodyDestroyList;
 	
 
 	public MainScreen(JocDeTrons joc) {
@@ -116,9 +116,9 @@ public class MainScreen extends AbstractScreen {
 		carregarObjectes();
 		carregarMusica();
         lastTime=0;
-        gestorContactes=new GestorContactes();
+        gestorContactes=new GestorContactes(bodyDestroyList);
         // --- si es volen destruir objectes, descomentar ---
-		ArrayList<Body> bodyDestroyList= new ArrayList<Body>();
+		bodyDestroyList= new ArrayList<Body>();
 		world.setContactListener(new GestorContactes(bodyDestroyList));
 		world.setContactListener(gestorContactes);
 
@@ -133,9 +133,9 @@ public class MainScreen extends AbstractScreen {
         crapList= new ArrayList<Crap>();
         ImagesPath crapPath = new ImagesPath("imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif");
         imagesPath= new ArrayList<ImagesPath>();
-        imagesPath.add(new ImagesPath(/*"imatges/puma_s.png"*/null,"imatges/pumaSprite.png"));
+        //imagesPath.add(new ImagesPath(/*"imatges/puma_s.png"*/null,"imatges/pumaSprite.png"));
         imagesPath.add(new ImagesPath(/*"imatges/avestru.png"*/null,"imatges/vestrus.png"));
-        imagesPath.add(new ImagesPath(/*"imatges/shark.png"*/null,"imatges/sharkftw.png"));
+        //imagesPath.add(new ImagesPath(/*"imatges/shark.png"*/null,"imatges/sharkftw.png"));
 
         // objecte que permet debugar les col·lisions
 		debugRenderer = new Box2DDebugRenderer();
@@ -153,7 +153,7 @@ public class MainScreen extends AbstractScreen {
         //tiledMapHelper.getCamera().position.x = 600;
 
             // Assegurar que la camera nomes mostra el mapa i res mes
-            Gdx.app.log("ScreenWidth",String.valueOf(joc.getScreenWidth()));
+            //Gdx.app.log("ScreenWidth",String.valueOf(joc.getScreenWidth()));
             /*if (tiledMapHelper.getCamera().position.x < joc.getScreenWidth() / 2) {
                 tiledMapHelper.getCamera().position.x = joc.getScreenWidth()/ 2;
             }
@@ -311,11 +311,11 @@ public class MainScreen extends AbstractScreen {
 	
 	@Override
 	public void render(float delta) {
-		 personatge.inicialitzarMoviments();
-         bird.inicialitzarMoviments();
-         //enemic.inicialitzarMoviments();
+		personatge.inicialitzarMoviments();
+        bird.inicialitzarMoviments();
+        //enemic.inicialitzarMoviments();
         tornado.inicialitzarMoviments();
-		 tractarEventsEntrada();
+		tractarEventsEntrada();
         spawnEnemy();
 
         //enemic.setMoureDreta(true);
@@ -325,22 +325,15 @@ public class MainScreen extends AbstractScreen {
 
         //checkMovimentEnemic(enemic);
 
-        Gdx.app.log("ViewPort height", String.valueOf(tiledMapHelper.getCamera().viewportHeight));
-        Gdx.app.log("ViewPort width",String.valueOf(tiledMapHelper.getCamera().viewportWidth));
-        Gdx.app.log("Position x",String.valueOf(tiledMapHelper.getCamera().position.x));
-        Gdx.app.log("Position y",String.valueOf(tiledMapHelper.getCamera().position.y));
+        //Gdx.app.log("ViewPort height", String.valueOf(tiledMapHelper.getCamera().viewportHeight));
+        //Gdx.app.log("ViewPort width",String.valueOf(tiledMapHelper.getCamera().viewportWidth));
+        //Gdx.app.log("Position x",String.valueOf(tiledMapHelper.getCamera().position.x));
+        //Gdx.app.log("Position y",String.valueOf(tiledMapHelper.getCamera().position.y));
 
         tornado.moure();
         tornado.updatePosition(delta);
-	     personatge.moure();
-        if(!tiledMapHelper.getCamera().frustum.pointInFrustum(personatge.getSpritePersonatge().getX(),personatge.getSpritePersonatge().getY(),0)){
-            Gdx.app.log("Player inside screen: ","blah");
-            //final Rectangle screenBounds = new Rectangle(0, 0, tiledMapHelper.getCamera().position.x, tiledMapHelper.getCamera().position.y);
-            //personatge.getSpritePersonatge().setX(screenBounds.x / 2);
-            //personatge.getSpritePersonatge().setPosition((screenBounds.x / 2)/2, (screenBounds.y / 2) / 2);
-            //onlyInsideCamera();
-        };
-         personatge.updatePosition(delta);
+	    personatge.moure();
+        personatge.updatePosition(delta);
         bird.moure();
         bird.updatePosition(delta);
         moveEnemies(delta);
@@ -350,13 +343,13 @@ public class MainScreen extends AbstractScreen {
         String enemyJump=null;
         if ((enemyJump=gestorContactes.enemyMustJump())!=null){
             gestorContactes.resetEnemyName();
-        //    enemic.setFerSalt(true);
+            //enemic.setFerSalt(true);
         }
 
 
 
-       //enemic.moure();
-        //enemic.updatePosition();
+//       enemic.moure();
+  //     enemic.updatePosition(delta);
 
         eliminarCossos();
         /**
@@ -376,7 +369,7 @@ public class MainScreen extends AbstractScreen {
         Gdx.gl.glClearColor(185f / 255f, 122f / 255f, 87f / 255f, 0);
 
 		moureCamera();
-        tiledMapHelper.createCameraLimit(world,tornado.getCos().getPosition().x+0.7f);
+        tiledMapHelper.createCameraLimit(world, tornado.getCos().getPosition().x + 0.7f);
 
 		// pintar el mapa
 		tiledMapHelper.render();
@@ -399,8 +392,8 @@ public class MainScreen extends AbstractScreen {
         // dibuixar els controls de pantalla
         stage.act();
         stage.draw();
-        Gdx.app.log("Tornado position:", String.valueOf(tornado.getCos().getPosition().x));
-        Gdx.app.log("Hero position:",String.valueOf(personatge.getCos().getPosition().x));
+        //Gdx.app.log("Tornado position:", String.valueOf(tornado.getCos().getPosition().x));
+        //Gdx.app.log("Hero position:",String.valueOf(personatge.getCos().getPosition().x));
 
 
 
@@ -438,13 +431,14 @@ public class MainScreen extends AbstractScreen {
             checkMovimentEnemic(x);
             //x.setMoureDreta(true);
             x.moure();
+            //Gdx.app.log("Cara dreta: ",String.valueOf(x.isCaraDreta()));
             x.updatePosition(delta);
         }
     }
     private void spawnEnemy(){
         //Gdx.app.log("time", String.valueOf(getSysTime()-lastTime));
         Collections.shuffle(imagesPath);
-        int frame_rows = 2, frame_cols = 6;
+        int frame_rows = 4, frame_cols = 7;
 
         if(getSysTime()-lastTime>5 &&enemyList.size() < 3){
 
@@ -453,7 +447,7 @@ public class MainScreen extends AbstractScreen {
                 frame_rows = 2;
             } else if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/vestrus.png") == 0){
                 frame_cols = 7;
-                frame_rows = 4;
+                frame_rows = 2;
             } else if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/sharkftw.png") == 0){
                 frame_cols = 7;
                 frame_rows = 2;
@@ -461,7 +455,7 @@ public class MainScreen extends AbstractScreen {
 
             Enemy e = new Enemy(world,imagesPath.get(0).getAnimatedImage(),imagesPath.get(0).getStoppedImage(),tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, frame_cols, frame_rows, Enemy.ENEMIC1);
             enemyList.add(e);
-            crapList.add(new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",bird.getCos().getPosition().x-0.5f,bird.getCos().getPosition().y-0.5f,Crap.CRAP));
+            crapList.add(new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",bird.getCos().getPosition().x,bird.getCos().getPosition().y-1,Crap.CRAP));
             lastTime=getSysTime();
         }
     }
@@ -475,20 +469,15 @@ public class MainScreen extends AbstractScreen {
         /*
 		 * per destruir cossos marcats per ser eliminats
 		 */
-        if(!gestorContactes.getBodyDestroyList().isEmpty()){
-            for(int i = gestorContactes.getBodyDestroyList().size()-1; i >=0; i-- ) {
-                Body cos = gestorContactes.getBodyDestroyList().get(i);
-                if(cos.equals(Crap.CRAP)){
-
-                    personatge.setAlive(false);
-                }
-                world.destroyBody(cos);
-            }
-            gestorContactes.getBodyDestroyList().clear();
+        ;
+        for(int i = bodyDestroyList.size()-1; i >=0; i-- ) {
+            world.destroyBody(bodyDestroyList.get(i));
         }
+        bodyDestroyList.clear();
+
     }
 
-    private void checkMovimentEnemic(Personatge enemic) {
+    private void checkMovimentEnemic(Enemy enemic) {
         if(personatge.isAlive()) {
             if (enemic.getPositionBody().x < personatge.getPositionBody().x) {
                 enemic.setMoureDreta(true);
@@ -507,11 +496,14 @@ public class MainScreen extends AbstractScreen {
 		world.dispose();
 		personatge.dispose();
         bird.dispose();
-        enemic.dispose();
+        //enemic.dispose();
         tornado.dispose();
-        for(Personatge p : enemyList){
+        for(Enemy p : enemyList){
             p.dispose();
         }
+        /*for(Crap c : crapList){
+            c.dispose();
+        }*/
 	}
 
     public void show() {

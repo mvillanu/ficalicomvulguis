@@ -23,7 +23,6 @@ public class GestorContactes implements ContactListener {
 	public GestorContactes() {
 		enemyName=null;
         bodyDestroyList = new ArrayList<Body>();
-
 	}
 
     public String enemyMustJump(){
@@ -50,22 +49,23 @@ public class GestorContactes implements ContactListener {
 			return;
 		}
 
+
         checkCrapContact(fixtureA,fixtureB);
 
-        /*if(fixtureA.getBody().getUserData().equals(Crap.CRAP)&&!fixtureB.getBody().getUserData().equals(Crap.CRAP)){
+        if(fixtureA.getBody().getUserData().equals(Crap.CRAP)&&!fixtureB.getBody().getUserData().equals(Crap.CRAP)){
             bodyDestroyList.add(fixtureA.getBody());
             Gdx.app.log("Shit on the ground!","pringue");
         } else {
             bodyDestroyList.add(fixtureB.getBody());
             Gdx.app.log("Shit on the ground!","pringue");
-        }*/
+        }
 
 
         //checkEsborrar(fixtureA, fixtureB);
 
-        chechEnemyContact(fixtureA, fixtureB);
+//        chechEnemyContact(fixtureA, fixtureB);
 
-		if (fixtureA.getBody().getUserData().equals("Personatge")
+		/*if (fixtureA.getBody().getUserData().equals("Personatge")
 				&& fixtureB.getBody().getUserData().equals("primerObjecte")
 				|| fixtureA.getBody().getUserData().equals("primerObjecte")
 				&& fixtureB.getBody().getUserData().equals("Personatge")) {
@@ -79,7 +79,7 @@ public class GestorContactes implements ContactListener {
 			} else {
 				bodyDestroyList.add(fixtureB.getBody());
 			}*/
-		}
+		//}*/
 
 
 	}

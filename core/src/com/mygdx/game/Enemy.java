@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -32,12 +34,13 @@ public class Enemy extends Personatge {
         setMoureDreta(false);
         setMoureEsquerra(false);
         setFerSalt(false);
+        //setPersonatgeCaraDreta(true);
         super.getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
     }
 
     @Override
     public void moure() {
-
+        //Gdx.app.log("Moves like jagger","hue");
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
 
