@@ -45,7 +45,7 @@ public class Enemy extends Personatge {
         float yVelocity=getCos().getLinearVelocity().y;
 
         if (isMoureDreta() && xVelocity<2.2f) {
-            getCos().applyLinearImpulse(new Vector2(0.4f, 0.0f),
+            getCos().applyLinearImpulse(new Vector2(1.0f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
 
@@ -54,7 +54,7 @@ public class Enemy extends Personatge {
             }
             setPersonatgeCaraDreta(true);
         } else if (isMoureEsquerra() && xVelocity<2.2f) {
-            getCos().applyLinearImpulse(new Vector2(-0.4f, 0.0f),
+            getCos().applyLinearImpulse(new Vector2(-1.0f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.LEFT);
             if (isPersonatgeCaraDreta()) {

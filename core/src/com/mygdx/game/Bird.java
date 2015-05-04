@@ -68,8 +68,8 @@ public class Bird extends Personatge {
             //getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
         }
 
-        if (isMoureDreta() && xVelocity < 1.0f /*&& getCos().getPosition().y < 9.0f*/) {
-            getCos().applyLinearImpulse(new Vector2(0.1f, 0.0f),
+        if (isMoureDreta() && xVelocity < 2.0f /*&& getCos().getPosition().y < 9.0f*/) {
+            getCos().applyLinearImpulse(new Vector2(2.1f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
 
@@ -77,8 +77,8 @@ public class Bird extends Personatge {
                 getSpritePersonatge().flip(true, false);
             }
             setPersonatgeCaraDreta(true);
-        } else if (isMoureEsquerra() && xVelocity > -1.0f) {
-            getCos().applyLinearImpulse(new Vector2(-0.1f, 0.0f),
+        } else if (isMoureEsquerra() && xVelocity > -2.0f) {
+            getCos().applyLinearImpulse(new Vector2(-2.1f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.LEFT);
             if (isPersonatgeCaraDreta()) {

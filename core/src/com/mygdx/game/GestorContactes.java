@@ -21,10 +21,12 @@ public class GestorContactes implements ContactListener {
 	private ArrayList<Body> bodyDestroyList;
     private String enemyName;
     private World world;
+    private boolean win;
 
 	public GestorContactes() {
 		enemyName=null;
         bodyDestroyList = new ArrayList<Body>();
+        setWin(false);
 	}
 
     public String enemyMustJump(){
@@ -33,7 +35,7 @@ public class GestorContactes implements ContactListener {
     public void resetEnemyName(){enemyName=null;}
 
     public ArrayList<Body> getBodyDestroyList(){return bodyDestroyList; }
-    public void setBodyDestroyList(ArrayList<Body> bodyDestroyList) {this.bodyDestroyList = bodyDestroyList;}
+    public void setBodyDestroyList(ArrayList<Body> bodyDestroyList) {this.bodyDestroyList = bodyDestroyList; setWin(false);}
 	public GestorContactes(ArrayList<Body> bodyDestroyList) {
 		this.bodyDestroyList = bodyDestroyList;
 	}
@@ -115,6 +117,21 @@ public class GestorContactes implements ContactListener {
                 Gdx.app.log("Enemy swallowed by tornado","ooups");
             }
 
+        }
+
+        if(fixtureA.getBody().getUserData().equals("endGame") && fixtureB.getBody().getUserData().equals(Personatge.HERO)){
+            if(!bodyDestroyList.contains(fixtureB.getBody())) {
+                bodyDestroyList.add(fixtureB.getBody());
+              //  Gdx.app.log("Enemy swallowed by tornado","ooups");
+            }
+            setWin(true);
+
+        } else if(fixtureB.getBody().getUserData().equals("endGame") && fixtureA.getBody().getUserData().equals(Personatge.HERO)) {
+            if(!bodyDestroyList.contains(fixtureA.getBody())) {
+                bodyDestroyList.add(fixtureA.getBody());
+                Gdx.app.log("Enemy swallowed by tornado","ooups");
+            }
+            setWin(true);
         }
 
 
@@ -267,6 +284,11 @@ public class GestorContactes implements ContactListener {
     }
 
 
+    public boolean isWin() {
+        return win;
+    }
 
-
+    public void setWin(boolean win) {
+        this.win = win;
+    }
 }

@@ -187,6 +187,15 @@ public class Personatge {
         requadre.dispose();
     }
 
+    public void applyImpulse(){
+
+        getCos().applyLinearImpulse(new Vector2(5.0f, 0.0f),
+                getCos().getWorldCenter(), true);
+
+
+
+    }
+
 
     private void crearProtagonista(String tag) {
         setSpritePersonatge(new Sprite(getAnimatedTexture()));
@@ -195,7 +204,7 @@ public class Personatge {
         // Definir el tipus de cos i la seva posició
         BodyDef defCos = new BodyDef();
         defCos.type = BodyDef.BodyType.DynamicBody;
-        defCos.position.set(5.0f, 3.0f);
+        defCos.position.set(8.0f, 5.0f);
 
         setCos(getWorld().createBody(defCos));
         getCos().setUserData(tag);

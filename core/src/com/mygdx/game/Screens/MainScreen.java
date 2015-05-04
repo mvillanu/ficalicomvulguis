@@ -94,6 +94,8 @@ public class MainScreen extends AbstractScreen {
     private ArrayList<Crap> crapList;
     private ArrayList<Enemy> enemyList;
     private ArrayList<ImagesPath> imagesPath;
+    private String end = "Game Over";
+    private String win = "You Win!";
 
     /**
      * per indicar quins cossos s'han de destruir
@@ -107,6 +109,7 @@ public class MainScreen extends AbstractScreen {
         // carregar el fitxer d'skins
         skin = new Skin(Gdx.files.internal("skins/skin.json"));
         title = new Label(joc.getTitol(),skin, "groc");
+        //title.setText(end);
 		/*
 		 * Crear el mon on es desenvolupa el joc. S'indica la gravetat: negativa
 		 * perquè indica cap avall
@@ -143,6 +146,7 @@ public class MainScreen extends AbstractScreen {
 
         //endscreen =
 //
+
 	}
 
     /**
@@ -322,11 +326,24 @@ public class MainScreen extends AbstractScreen {
         //super.render(delta);
         Gdx.app.log("Hero is :",String.valueOf(personatge.isAlive()));
 		if(!personatge.isAlive()){
-            Gdx.app.log("Dins else :",String.valueOf(personatge.isAlive()));
-            //joc.setScreen(null);
-            joc.setScreen(new EndGameScreen(joc,tiledMapHelper.getCamera()));
+            if(gestorContactes.isWin()){
+                title.setText(win);
+            } else if(!personatge.isAlive()){
+                title.setText(end);
+            }
 
-        } else {
+            Gdx.app.log("Dins else :",String.valueOf(personatge.isAlive()));
+
+            // Esborrar la pantalla
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            // Color de fons marro
+            Gdx.gl.glClearColor(0f,0f,0f, 0);
+
+            // dibuixar els controls de pantalla
+            stage.act();
+            stage.draw();
+        }else {
             personatge.inicialitzarMoviments();
             bird.inicialitzarMoviments(personatge);
             //enemic.inicialitzarMoviments();
@@ -354,14 +371,12 @@ public class MainScreen extends AbstractScreen {
             moveCraps(delta);
             moveEnemies(delta);
 
-            String enemyJump=null;
-            if ((enemyJump=gestorContactes.enemyMustJump())!=null){
+            String enemyJump = null;
+            if ((enemyJump = gestorContactes.enemyMustJump()) != null) {
                 gestorContactes.resetEnemyName();
                 jumpEnemies(delta);
                 //enemic.setFerSalt(true);
             }
-
-
 
 
 //       enemic.moure();
@@ -410,44 +425,20 @@ public class MainScreen extends AbstractScreen {
             batch.end();
 
 
-
-            // dibuixar els controls de pantalla
-            stage.act();
-            stage.draw();
             Gdx.app.log("Tornado position:", String.valueOf(tornado.getCos().getPosition().x));
             //Gdx.app.log("Hero position:",String.valueOf(tiledMapHelper.getCamera().position.x));
-
 
 
             debugRenderer.render(world, tiledMapHelper.getCamera().combined.scale(
                     JocDeTrons.PIXELS_PER_METRE, JocDeTrons.PIXELS_PER_METRE,
                     JocDeTrons.PIXELS_PER_METRE));
 
+            if (personatge.getCos().getPosition().y <= 0) {
+                personatge.setAlive(false);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            }
         }
+
 	}
 
     private long lastTime;
@@ -493,7 +484,7 @@ public class MainScreen extends AbstractScreen {
         Collections.shuffle(imagesPath);
         int frame_rows = 4, frame_cols = 7;
 
-        if(getSysTime()-lastTime>5){
+        if(getSysTime()-lastTime>3f){
 
             if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/pumaSprite.png") == 0){
                 frame_cols = 5;
@@ -506,10 +497,11 @@ public class MainScreen extends AbstractScreen {
                 frame_rows = 2;
             }
 
-            if(enemyList.size() < 4 ){
+           // if(enemyList.size() < 4 ){
                 Enemy e = new Enemy(world,imagesPath.get(0).getAnimatedImage(),imagesPath.get(0).getStoppedImage(),tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, frame_cols, frame_rows, Enemy.ENEMIC1);
+                //e.applyImpulse();
                 enemyList.add(e);
-            }
+            //}
 
 
 
@@ -599,6 +591,7 @@ public class MainScreen extends AbstractScreen {
     public void show() {
         // Els elements es mostren en l'ordre que s'afegeixen.
         // El primer apareix a la part superior, el darrer a la part inferior.
+
         table.center().top();
         Cell cell = table.add(title).padTop(5);
         table.setFillParent(true);
