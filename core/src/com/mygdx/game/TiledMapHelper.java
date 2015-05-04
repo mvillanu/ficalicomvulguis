@@ -53,6 +53,8 @@ public class TiledMapHelper {
 	private TiledMap map;
 	private float limitCameraLeft = 1.7f;
 	private float limitCameraRight = 20.7f;
+	public static String LEFT_SCREEN_LIMIT = "ScreenLeft";
+	public static String RIGHT_SCREEN_LIMIT = "ScreenRight";
 
 	/**
 	 * Renders the part of the map that should be visible to the user.
@@ -216,7 +218,7 @@ public class TiledMapHelper {
 		fixtureDef2.filter.maskBits = ColisionsGroups.HERO_ENTITY | ColisionsGroups.ENEMIC_ENTITY;
 		Body bodyEdgeScreenLeft = world.createBody(bodyDef2);
 		bodyEdgeScreenLeft.createFixture(fixtureDef2);
-		bodyEdgeScreenLeft.setUserData("ScreenLeft");
+		bodyEdgeScreenLeft.setUserData(LEFT_SCREEN_LIMIT);
 		getScreenLimits().add(bodyEdgeScreenLeft);
 		fixtureDef2.shape = null;
 		edgeShape.dispose();
@@ -233,7 +235,7 @@ public class TiledMapHelper {
 		fixtureDef4.filter.maskBits = ColisionsGroups.HERO_ENTITY | ColisionsGroups.ENEMIC_ENTITY;;
 		Body bodyEdgeScreenRight = world.createBody(bodyDef4);
 		bodyEdgeScreenRight.createFixture(fixtureDef4);
-		bodyEdgeScreenRight.setUserData("ScreenRight");
+		bodyEdgeScreenRight.setUserData(RIGHT_SCREEN_LIMIT);
 		getScreenLimits().add(bodyEdgeScreenRight);
 		fixtureDef4.shape = null;
 		edgeShapeRight.dispose();

@@ -51,7 +51,7 @@ public class GestorContactes implements ContactListener {
 		}
 
         checkCrapContact(fixtureA,fixtureB);
-
+        chechEnemyContact(fixtureA,fixtureB);
         /*if((fixtureA.getBody().getUserData().equals(Crap.CRAP) && fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1))
                 ||
                 fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1) || fixtureB.getBody().getUserData().equals(Crap.CRAP)) {
@@ -87,6 +87,36 @@ public class GestorContactes implements ContactListener {
             }
 
         }
+
+
+        if(fixtureA.getBody().getUserData().equals(TiledMapHelper.LEFT_SCREEN_LIMIT) && fixtureB.getBody().getUserData().equals(Enemy.ENEMIC1)){
+            if(!bodyDestroyList.contains(fixtureB.getBody())) {
+                bodyDestroyList.add(fixtureB.getBody());
+                Gdx.app.log("Enemy swallowed by tornado","ooups");
+            }
+
+        } else if(fixtureB.getBody().getUserData().equals(TiledMapHelper.LEFT_SCREEN_LIMIT) && fixtureA.getBody().getUserData().equals(Enemy.ENEMIC1)) {
+            if(!bodyDestroyList.contains(fixtureA.getBody())) {
+                bodyDestroyList.add(fixtureA.getBody());
+                Gdx.app.log("Enemy swallowed by tornado","ooups");
+            }
+
+        }
+
+        if(fixtureA.getBody().getUserData().equals(TiledMapHelper.LEFT_SCREEN_LIMIT) && fixtureB.getBody().getUserData().equals(Personatge.HERO)){
+            if(!bodyDestroyList.contains(fixtureB.getBody())) {
+                bodyDestroyList.add(fixtureB.getBody());
+                Gdx.app.log("Enemy swallowed by tornado","ooups");
+            }
+
+        } else if(fixtureB.getBody().getUserData().equals(TiledMapHelper.LEFT_SCREEN_LIMIT) && fixtureA.getBody().getUserData().equals(Personatge.HERO)) {
+            if(!bodyDestroyList.contains(fixtureA.getBody())) {
+                bodyDestroyList.add(fixtureA.getBody());
+                Gdx.app.log("Enemy swallowed by tornado","ooups");
+            }
+
+        }
+
 
 	}
 
@@ -174,7 +204,7 @@ public class GestorContactes implements ContactListener {
 			} else {
 				bodyDestroyList.add(fixtureB.getBody());
 			}*/
-    //}*/
+    //}
 
 
 

@@ -63,6 +63,10 @@ public class JocDeTrons extends Game {
         //setScreen( new Animator(this));
 	}
 
+	/*public void changeScreen(){
+		setScreen(new SplashScreen(this));
+	}*/
+
 	
 	@Override
 	public void resume() {
