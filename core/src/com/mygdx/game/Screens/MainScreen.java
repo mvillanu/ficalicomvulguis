@@ -73,7 +73,7 @@ public class MainScreen extends AbstractScreen {
 	 * col�lisions s�n les que desitgem. Cal tenir present, pe`ro, que �s
 	 * m�s lent. Nom�s s'ha d'utitilitzar per debugar.
 	 */
-	private Box2DDebugRenderer debugRenderer;
+	//private Box2DDebugRenderer debugRenderer;
 
 	/**
 	 * Musica i sons
@@ -83,7 +83,7 @@ public class MainScreen extends AbstractScreen {
     /**
      * Per debugar les col·lisions
      */
-	private Box2DDebugRenderer box2DRenderer;
+	//private Box2DDebugRenderer box2DRenderer;
 
     /**
      * Per mostrar el títol
@@ -135,14 +135,14 @@ public class MainScreen extends AbstractScreen {
 
         enemyList=new ArrayList<Enemy>();
         crapList= new ArrayList<Crap>();
-        ImagesPath crapPath = new ImagesPath("imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif");
+        ImagesPath crapPath = new ImagesPath("imatges/animated-bullet-21.png","imatges/animated-bullet-21.png");
         imagesPath= new ArrayList<ImagesPath>();
         imagesPath.add(new ImagesPath(/*"imatges/puma_s.png"*/null,"imatges/pumaSprite.png"));
         imagesPath.add(new ImagesPath(/*"imatges/avestru.png"*/null,"imatges/vestrus.png"));
         imagesPath.add(new ImagesPath(/*"imatges/shark.png"*/null,"imatges/sharkftw.png"));
 
         // objecte que permet debugar les col·lisions
-		debugRenderer = new Box2DDebugRenderer();
+		//debugRenderer = new Box2DDebugRenderer();
 
         //endscreen =
 //
@@ -429,9 +429,9 @@ public class MainScreen extends AbstractScreen {
             //Gdx.app.log("Hero position:",String.valueOf(tiledMapHelper.getCamera().position.x));
 
 
-            debugRenderer.render(world, tiledMapHelper.getCamera().combined.scale(
+            /*debugRenderer.render(world, tiledMapHelper.getCamera().combined.scale(
                     JocDeTrons.PIXELS_PER_METRE, JocDeTrons.PIXELS_PER_METRE,
-                    JocDeTrons.PIXELS_PER_METRE));
+                    JocDeTrons.PIXELS_PER_METRE));*/
 
             if (personatge.getCos().getPosition().y <= 0) {
                 personatge.setAlive(false);
@@ -468,6 +468,7 @@ public class MainScreen extends AbstractScreen {
         for(Enemy x : enemyList){
             x.inicialitzarMoviments();
             checkMovimentEnemic(x);
+            x.setFerSalt(true);
             //x.setMoureDreta(true);
             x.moure();
             x.updatePosition(delta);
@@ -484,7 +485,7 @@ public class MainScreen extends AbstractScreen {
         Collections.shuffle(imagesPath);
         int frame_rows = 4, frame_cols = 7;
 
-        if(getSysTime()-lastTime>3f){
+        if(getSysTime()-lastTime>2){
 
             if(imagesPath.get(0).getAnimatedImage().toString().compareToIgnoreCase("imatges/pumaSprite.png") == 0){
                 frame_cols = 5;
@@ -497,15 +498,15 @@ public class MainScreen extends AbstractScreen {
                 frame_rows = 2;
             }
 
-           // if(enemyList.size() < 4 ){
+            if(enemyList.size() < 4 ){
                 Enemy e = new Enemy(world,imagesPath.get(0).getAnimatedImage(),imagesPath.get(0).getStoppedImage(),tornado.getCos().getPosition().x+2, tornado.getCos().getPosition().y, frame_cols, frame_rows, Enemy.ENEMIC1);
                 //e.applyImpulse();
                 enemyList.add(e);
-            //}
+            }
 
 
 
-            crapList.add(new Crap(world,"imatges/animated-bullet-21.gif","imatges/animated-bullet-21.gif",bird.getCos().getPosition().x,bird.getCos().getPosition().y-1,Crap.CRAP));
+            crapList.add(new Crap(world,"imatges/animated-bullet-21.png","imatges/animated-bullet-21.png",bird.getCos().getPosition().x,bird.getCos().getPosition().y-1,Crap.CRAP));
             lastTime=getSysTime();
 
 
@@ -542,16 +543,20 @@ public class MainScreen extends AbstractScreen {
         if (!bodyDestroyList.isEmpty()){
             Gdx.app.log("Destroy ", String.valueOf(bodyDestroyList.size()));
             for (Body b : bodyDestroyList) {
-                Gdx.app.log("Destroy", b.getUserData().toString());
-                world.destroyBody(b);
-                removeThatBody(b);
-                crapList.clear();
-                if(personatge.getCos() == b){
-                    personatge.setAlive(false);
-                    //personatge = null;
+                try{
+                    Gdx.app.log("Destroy", b.getUserData().toString());
+                    world.destroyBody(b);
+                    removeThatBody(b);
+                    crapList.clear();
+                    if(personatge.getCos() == b){
+                        personatge.setAlive(false);
+                        //personatge = null;
+                    }
+                    //enemyList.remove(b);
+                    //crapList.clear();
+                } catch (NullPointerException ex){
+
                 }
-                //enemyList.remove(b);
-                //crapList.clear();
             }
             bodyDestroyList.clear();
             //gestorContactes.setBodyDestroyList(destroy);
@@ -573,19 +578,24 @@ public class MainScreen extends AbstractScreen {
 
     @Override
 	public void dispose() {
-		musica.stop();
-		musica.dispose();
-		world.dispose();
-        personatge.dispose();
-        bird.dispose();
-        //enemic.dispose();
-        tornado.dispose();
-        for(Enemy p : enemyList){
-            p.dispose();
+        try {
+            musica.stop();
+            musica.dispose();
+            world.dispose();
+            personatge.dispose();
+            bird.dispose();
+            //enemic.dispose();
+            tornado.dispose();
+            for(Enemy p : enemyList){
+                p.dispose();
+            }
+            for(Crap c : crapList){
+                c.dispose();
+            }
+        } catch (NullPointerException ex){
+
         }
-        for(Crap c : crapList){
-            c.dispose();
-        }
+
 	}
 
     public void show() {

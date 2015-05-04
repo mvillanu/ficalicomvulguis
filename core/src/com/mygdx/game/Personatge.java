@@ -308,7 +308,7 @@ public class Personatge {
         float xVelocity=getCos().getLinearVelocity().x;
         float yVelocity=getCos().getLinearVelocity().y;
         if (moureDreta) {
-            getCos().applyLinearImpulse(new Vector2(0.1f, 0.0f),
+            getCos().applyLinearImpulse(new Vector2(0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.RIGHT);
 
@@ -317,7 +317,7 @@ public class Personatge {
             }
             setPersonatgeCaraDreta(true);
         } else if (moureEsquerra) {
-            getCos().applyLinearImpulse(new Vector2(-0.1f, 0.0f),
+            getCos().applyLinearImpulse(new Vector2(-0.2f, 0.0f),
                     getCos().getWorldCenter(), true);
             getSpriteAnimat().setDirection(AnimatedSprite.Direction.LEFT);
             if (isPersonatgeCaraDreta()) {
@@ -327,7 +327,7 @@ public class Personatge {
         }
 
         if (ferSalt && Math.abs(getCos().getLinearVelocity().y) < 1e-9) {
-            getCos().applyLinearImpulse(new Vector2(0.0f, 4.0f),
+            getCos().applyLinearImpulse(new Vector2(0.0f, 6.0f),
                     getCos().getWorldCenter(), true);
             long id = soSalt.play();
         }
